@@ -29,9 +29,7 @@ function pantalla() {
 # Llamada de la funcion pantalla y la muestra por pantalla
  pantalla 
 
- echo "+++++++++++++++++++++++++++++"
- echo "Directorio seleccionado: $box" # Numero del directorio seleccionado
- echo "+++++++++++++++++++++++++++++"
+ 
 # Seleccion del nombre de la segunda columna y la guardo para después hacerle el 'less'
 function selecOpcion(){
 	# Almaceno el número de directorios 
@@ -40,10 +38,7 @@ function selecOpcion(){
 	if [ $box -lt $numeroDirectorios ]
 	then
 		# Bucle que lista (en numero) todos los directorios de la carpeta actual
-		vuelta=1
-		echo "**********************************************"
- 		echo "Número de archivos totales encontrados: $numeroDirectorios" # Numero de directorios & ficheros
- 		echo "**********************************************"
+		vuelta=-1
 		while [ $vuelta -lt $numeroDirectorios ]
 		do
 		
@@ -52,6 +47,7 @@ function selecOpcion(){
 		do		
 			let vuelta+=1
 			# echo $vuelta $i
+			# echo $vuelta
 			quienLeo=$i
 			# Fichero o directorio que debe aplicarse el less
 			# echo "============"
@@ -61,6 +57,7 @@ function selecOpcion(){
 			if [ $box -eq $vuelta ]
 			then
 				less $quienLeo
+				# echo "Fin"
 			#else
 			#	echo "A pensar más chato"
 			fi
@@ -73,9 +70,15 @@ function selecOpcion(){
 		echo "............"
 		echo "  Entradas  "
 		echo "............"
-		echo $vuelta, $box , $i
+		echo "Selección: $box" 
 		echo "............"
-
+		echo "+++++++++++++++++++++++++++++"
+ 		echo "Directorio seleccionado: $box" # Numero del directorio seleccionado
+ 		echo "+++++++++++++++++++++++++++++"
+		echo "****************************************"
+ 		echo "Nº de archivos totales encontrados: $numeroDirectorios" # Numero de directorios & ficheros
+ 		echo "****************************************"
+		
 		
 		
 	else
