@@ -7,5 +7,9 @@ size 100k
 autoextend on
 next 100k
 maxsize 1000k;
+grant connect to pau;
+grant select to pau;
+grant update to pau;
+grant delete to pau;
 exit
 EOF
