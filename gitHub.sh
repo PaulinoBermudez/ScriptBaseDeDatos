@@ -2,7 +2,9 @@
 
 clear
 
-echo "Añadiendo archivos a git"
+echo "+--------------------------+"
+echo "| Añadiendo archivos a git |"
+echo "+--------------------------+"
 sleep 2
 
 git add . &&
@@ -11,4 +13,6 @@ git push origin master
 sleep 5
 clear
 git status
-echo "Trabajo terminado"
+echo "+--------------------------+"
+echo "|     Trabajo terminado    |"
+echo "+--------------------------+"
