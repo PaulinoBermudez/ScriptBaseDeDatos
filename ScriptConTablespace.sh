@@ -1,5 +1,18 @@
 #!/bin/bash
 
+#
+#   Crea un usuario CONPERMISOS
+#       Que tenga privilegios de connect y resource
+#       Utilízalo para crear una tabla DATOS(TEXTO varchar2(255),numero integer)
+#       Inserta datos (puede que necesite cuota)
+#   Crea un usuario LIMITADO
+#   Haz que CONPERMISOS de privilegios a LIMITADO para que:
+#       Pueda leer todos los campos de la tabla DATOS
+#       Pueda actualizar el campo NUMERO de tabla DATOS
+#       Pero no pueda modificar el campo TEXTO, ni borrar filas, ni insertar filas
+#
+
+
 # Accedemos a la carpeta de tablespaces.
 cd /home/alumno/tablespace
 
