@@ -21,34 +21,46 @@ drop table circuitos;
 
 create table escuderias
 	(id_escuderia number (3) primary key,
-	nombre varchar2 (20));
+	nombre varchar2 (20))
+	tablespace carreras; -- Guardar la tabla en mi tablespace nuevo
 
 create table pilotos
 	(id_piloto number(3) primary key,
 	nombre varchar2 (20),
-	id_escuderia number(3));
+	id_escuderia number(3))
+	tablespace carreras;
 
 create table prototipos
 	(id_prototipo number (3) primary key,
 	nombre varchar2 (20),
-	id_escuderia number (3));
+	id_escuderia number (3))
+	tablespace carreras;
 
 create table carreras
 	(id_carrera number (3) primary key,
 	fecha date,
-	id_circuito number(3));
+	id_circuito number(3))
+	tablespace carreras;
 
 create table resultados
 	(id_prototipo number(3),
 	id_carrera number (3),
 	id_piloto number(3),
 	tiempo varchar2(10),
-	posicion number(3));
+	posicion number(3))
+	tablespace carreras;
 
 create table circuitos
 	(id_circuito number(3) primary key,
-	nombre varchar2 (20));
+	nombre varchar2 (20))
+	tablespace carreras;
 
+			 
+----------------------------------------------------------------------------------------------------------
+-- OTRA FORMA DE AÑADIR LA TABLA ES MOVIENDOLA A MI TABLESPACE -- > EN CASO DE YA ESTAR CREADA LA TABLA --
+----------------------------------------------------------------------------------------------------------
+
+			 -- alter table TU_TABLA move tablespace TU_TABLESPACE 
 
 --Inserci�n de filas:
 
