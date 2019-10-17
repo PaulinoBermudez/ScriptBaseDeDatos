@@ -26,4 +26,4 @@ do
 done
 
 # Lanzo el script 'privilegiosOtrosUsuarios.sql' de SQL con sys en SQLPLUS
-sqlpus -s BERMUDEZ/BERMUDEZ51@10.1.35.51/asir as sysdba @/home/alumno/privilegiosOtrosUsuarios.sql
+./sqlpus -s BERMUDEZ/BERMUDEZ51@10.1.35.51/asir @/home/alumno/privilegiosOtrosUsuarios.sql
