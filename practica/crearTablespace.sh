@@ -2,7 +2,7 @@
 # Accedemos al directorio donde crear el directorio 
 cd /home/alumno  
 # Creamos el directorio del tablespace  
-mkdir datos                   
+mkdir datos/paraotros/                   
 # Creamos el tablespace en sqlplus  
 sqlplus / as sysdba<<EOF           
 create tablespace paraotros       
@@ -12,4 +12,4 @@ autoextend on
 next 200k                                    
 maxsize 100M;                                
 exit                               
-EOF                                                                                    
+EOF
