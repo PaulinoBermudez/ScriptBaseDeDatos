@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Llenamos el tablespace CARRERAS con un bucle. Nos conectamos con el USER: BERMUDEZ.
 sqlplus BERMUDEZ/BERMUDEZ51@10.1.35.51/asir<<EOF
 
 create table TABLALLENA VALORES(VARCHAR(255)) on tablespace carreras;
@@ -25,6 +26,7 @@ alter user BERMUDEZ quota 5M on carreras;
 exit
 EOF
 
+# Llenamos de nuevo el tablespace con un bucle infinito.
 sqlplus BERMUDEZ/BERMUDEZ51@10.1.35.51/asir<<EOF
 declare
 i NUMBER :=0;
@@ -35,5 +37,4 @@ insert into TABLALLENA values($i);
 loop end;
 end;
 /
-
 EOF
