@@ -11,5 +11,8 @@ size 800k
 autoextend on                  
 next 200k 
 maxsize 100M;   
+
+alter user BERMUDEZ default tablespace carreras quota on unlimited;
+
 exit      
-EOF 
+EOF
