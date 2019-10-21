@@ -21,7 +21,8 @@ drop table circuitos;
 create table escuderias
 	(id_escuderia number (3) primary key,
 	nombre varchar2 (20))
-	tablespace carreras; -- Guardar la tabla en mi tablespace nuevo CARRERAS.
+	tablespace carreras; 
+-- Guardar la tabla en mi tablespace nuevo CARRERAS.
 
 create table pilotos
 	(id_piloto number(3) primary key,
