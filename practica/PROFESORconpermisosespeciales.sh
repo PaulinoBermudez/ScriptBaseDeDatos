@@ -3,7 +3,11 @@
 # PROFESOR con permisos de lectura en las V.sistema DBA_TABLES & DBA_TABLESPACES.
 # Conectamos con sys. pero damos los privilegios sobre la tabla de BERMUDEZ. 
 sqlplus / as sysdba<<EOF
-GRANT SELECT ON BERMUDEZ.DBA_TABLES TO PROFESOR;
-GRANT SELECT ON BERMUDEZ.DBA_TABLESPACES TO PROFESOR;
+drop role permisosProfe;
+create role permisosProfe;
+GRANT SELECT ON DBA_TABLES TO permisosProfe;
+GRANT SELECT ON DBA_TABLESPACES TO permisosProfe;
+
+GRANT permisosProfe TO PROFESOR;
 exit
 EOF
