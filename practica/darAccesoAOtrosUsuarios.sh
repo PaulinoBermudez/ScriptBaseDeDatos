@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Creacion de sinónimos, del rol para asignar los sinónimos.
-sqlpus / as sysdba<<EOF
+sqlplus / as sysdba<<EOF
 
 create public synonym escuderias for BERMUDEZ.escuderias;
 create public synonym pilotos for BERMUDEZ.pilotos;
@@ -29,4 +29,4 @@ do
 done
 
 # Lanzo el script 'privilegiosOtrosUsuarios.sql' de SQL con sys en SQLPLUS, es el único con capacidad para lanzar y asignar el role.
-sqlpus / as sysdba @privilegiosOtrosUsuarios.sql
+sqlplus / as sysdba @privilegiosOtrosUsuarios.sql
