@@ -1,6 +1,5 @@
 --Borrado de claves extranjeras:
 
-
 alter table pilotos drop constraint fk_id_escuderia;
 alter table prototipos drop constraint fk_id_escuderia2;
 alter table carreras drop constraint fk_id_circuito;
@@ -22,7 +21,8 @@ drop table circuitos;
 create table escuderias
 	(id_escuderia number (3) primary key,
 	nombre varchar2 (20))
-	tablespace carreras; -- Guardar la tabla en mi tablespace nuevo
+	tablespace carreras; 
+-- Guardar la tabla en mi tablespace nuevo CARRERAS.
 
 create table pilotos
 	(id_piloto number(3) primary key,
@@ -54,8 +54,7 @@ create table circuitos
 	(id_circuito number(3) primary key,
 	nombre varchar2 (20))
 	tablespace carreras;
-
-			 
+		 
 ----------------------------------------------------------------------------------------------------------
 -- OTRA FORMA DE AÑADIR LA TABLA ES MOVIENDOLA A MI TABLESPACE -- > EN CASO DE YA ESTAR CREADA LA TABLA --
 ----------------------------------------------------------------------------------------------------------
