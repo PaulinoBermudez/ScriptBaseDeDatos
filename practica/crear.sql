@@ -42,3 +42,4 @@ create user PROFESOR identified by PROFESOR quota 10M on paraotros;
 grant connect, resource to PROFESOR;
 create user BERMUDEZ identified by BERMUDEZ51 quota unlimited on Users;
 grant connect, resource to BERMUDEZ;
+-- SCRIPT DE USUARIOS PARA SQL.
