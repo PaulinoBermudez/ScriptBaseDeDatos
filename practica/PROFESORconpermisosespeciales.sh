@@ -14,7 +14,7 @@ drop role permisosProfe;
 create role permisosProfe;
 GRANT SELECT ON DBA_TABLES TO permisosProfe;
 GRANT SELECT ON DBA_TABLESPACES TO permisosProfe;
-
+GRANT SELECT ON DBA_DATAFILES TO permisosProfe;
 GRANT permisosProfe TO PROFESOR;
 exit
 EOF
