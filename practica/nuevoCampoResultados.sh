@@ -20,7 +20,10 @@ EOF
 sqlplus / as sysdba<<EOF
 grant update(valoracion) on BERMUDEZ.RESULTADOS to LECTURATABLAS;
 EOF
-
+sleep 5
+clear
+echo "Cambiando campo VALORACION - Modo pruebas" 
+sleep 5
 # PRUEBAS:
 # - Usuario que realiza un cambio en valoracion=aceptable.
 sqlplus PRUEBAS/PRUEBAS@10.1.35.51/asir<<EOF
@@ -28,8 +31,12 @@ update RESULTADOS set valoracion='ACEPTABLE';
 commit;
 exit
 EOF
+sleep 5
+clear
+echo "Confirmando cambios - Modo pruebas"
+sleep 5
 # - Usuario que verifica el cambio del campo valoracion.
-sqlplus UTRERO/UTRERO@@10.1.35.51/asir<<EOF
+sqlplus UTRERO/UTRERO@10.1.35.51/asir<<EOF
 select * from resultados;
 exit
 EOF
