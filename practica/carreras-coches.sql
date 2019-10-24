@@ -16,7 +16,7 @@ drop table carreras;
 drop table resultados;
 drop table circuitos;
 
---Creaci�n de tablas:
+--Creación de tablas:
 
 create table escuderias
 	(id_escuderia number (3) primary key,
@@ -61,7 +61,7 @@ create table circuitos
 
 			 -- alter table TU_TABLA move tablespace TU_TABLESPACE 
 
---Inserci�n de filas:
+--Inserción de filas:
 
 insert into escuderias values (1,'RENOL');
 insert into escuderias values (2,'FERRALLA');
@@ -140,7 +140,7 @@ insert into resultados values (5,6,5,'1:28:41234',2);
 insert into resultados values (6,6,6,'1:29:51234',1);
 
 
---Fijaci�n de claves extranjeras:
+--Fijación de claves extranjeras:
 
 alter table pilotos add constraint fk_id_escuderia
 	foreign key (id_escuderia) references escuderias;
