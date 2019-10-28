@@ -9,20 +9,19 @@
 
 # Llenamos el tablespace CARRERAS con un bucle. Nos conectamos con el USER: BERMUDEZ.
 sqlplus BERMUDEZ/BERMUDEZ51@10.1.35.51/asir<<EOF
-drop table TABLALLENA;
-create table TABLALLENA VALORES(VARCHAR(255)) on tablespace carreras;
 begin
 for i in 1 .. 100000 loop
-insert into TABLALLENA values($i);
+insert into resultados(valoracion) values('MALO');
 loop end;
 end;
 /
+COMMIT;
 EOF
 
 # Ampliacion del datafile de CARRERAS.
 sqlplus / as sysdba<<EOF
 alter tablespace carreras 
-add datafile 'datos/MasCarreras.dbf'
+add datafile '/home/alumnom/datos/carreras/MasCarreras.dbf'
 size 2M
 autoextend on
 next 200k
@@ -38,7 +37,7 @@ i NUMBER :=0;
 begin
 while i <= true
 loop
-insert into TABLALLENA values($i);
+insert into resultados(valoracion) values('MALO');
 loop end;
 end;
 /
