@@ -20,7 +20,10 @@
 # +Pide al profesor que compruebe su usuario.                   #
 #################################################################
 
-# => Creación del script SQL para los usuarios.
+#################################################
+# => Creación del script SQL para los usuarios. #
+#################################################
+
 # El resto de usuarios.
 rm crear.sql
 for i in `cat lista`;
