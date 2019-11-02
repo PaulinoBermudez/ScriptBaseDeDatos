@@ -8,7 +8,8 @@
 # Conectamos con sys. para dar los privilegios.                                   #
 ###################################################################################
 
-# PROFESOR con permisos de lectura en las V.sistema DBA_TABLES & DBA_TABLESPACES.
+# PROFESOR con permisos de lectura en las V.sistema DBA_TABLES & DBA_TABLESPACES & 
+# DBA_DATA_FILES & DBA_TS_QUOTAS.
 # Conectamos con sys. pero damos los privilegios sobre la tabla de BERMUDEZ. 
 sqlplus / as sysdba<<EOF
 drop role permisosProfe;
