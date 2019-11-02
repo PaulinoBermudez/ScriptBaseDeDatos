@@ -39,4 +39,5 @@ echo "create user BERMUDEZ identified by BERMUDEZ51 default tablespace USERS quo
 echo "user and password ===> OK!"
 echo "grant connect, resource to BERMUDEZ;">>crear.sql
 echo "Privileges ===> OK!"
+# Creo los usuarios nuevos lanzando el script de SQL
 sqlplus / as sysdba @crear.sql
