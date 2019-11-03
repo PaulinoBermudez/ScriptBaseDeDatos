@@ -33,9 +33,10 @@ rm privilegiosOtrosUsuarios.sql
 for i in `cat lista`;
 do 
   echo "grant LECTURATABLAS to $i;">>privilegiosOtrosUsuarios.sql
-  echo "Script terminado $i"
+  echo "PRIVILEGIOS OTORGADOS A $i"
   sleep 1
   clear
+  echo "Script terminado"
 done
 
 # Lanzo el script 'privilegiosOtrosUsuarios.sql' de SQL con sys en SQLPLUS
