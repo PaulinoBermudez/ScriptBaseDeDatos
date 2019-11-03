@@ -59,4 +59,5 @@ values(i,'lleno');
 end loop;
 end;
 /
+commit;
 select * from llenar;
