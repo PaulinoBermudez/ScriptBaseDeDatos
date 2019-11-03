@@ -51,7 +51,7 @@ EOF
 # Llenado de tablespace con otra tabla nueva. 
 sqlplus BERMUDEZ/BERMUDEZ51@10.1.35.51/asir<<EOF
 drop table llenar;
-create table llenar (id number, text varchar(255))  tablespace carreras;
+create table llenar (id number, texto varchar(255))  tablespace carreras;
 begin
 for i in 1 .. 50000 loop 
 insert into llenar (id,texto)
