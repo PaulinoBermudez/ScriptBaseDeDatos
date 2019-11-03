@@ -19,7 +19,7 @@ mkdir datos/carreras
 sqlplus / as sysdba<<EOF 
 drop tablespace carreras;
 create tablespace carreras  
-datafile '/home/alumno/datos/carreras/carreras.dbf'  
+datafile '/datos/carreras/carreras.dbf'  
 size 800k                
 autoextend on                  
 next 200k 

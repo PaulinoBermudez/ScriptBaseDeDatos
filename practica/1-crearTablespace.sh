@@ -14,7 +14,7 @@ mkdir datos/
 # Creamos el tablespace en sqlplus como administrador.
 #  |
 #  + Asignamos un nombre al tablespace en este caso 'PARAOTROS'
-#  + Escribimos la ruta donde se almacenará el datafile '/home/alumno/datos/paraotros1.dbf', 
+#  + Escribimos la ruta donde se almacenará el datafile '/datos/paraotros1.dbf', 
 #  | paraotros1.dbf es el tipo de archivo donde guarda mis datos del tablespace.
 #  + Asignamos el tamaño INICIAL del tablespace, auto extenderse 'ON' con el siguiente tamaño '200k'
 #  + Con tamaño maximo de 100M.
@@ -24,12 +24,12 @@ mkdir datos/
 
 sqlplus / as sysdba<<EOF           
 create tablespace paraotros       
-datafile '/home/alumno/datos/paraotros1.dbf',
+datafile '/datos/paraotros1.dbf',
 size 800k                                 
 autoextend on                             
 next 200k                                    
 maxsize 100M,
-'/home/alumno/datos/paraotros2.dbf'
+'/datos/paraotros2.dbf'
 size 800k                                 
 autoextend on                             
 next 200k                                    

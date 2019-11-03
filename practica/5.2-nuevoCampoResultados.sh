@@ -40,3 +40,12 @@ sqlplus UTRERO/UTRERO@10.1.35.51/asir<<EOF
 select * from resultados;
 exit
 EOF
+echo "Confirmando cambios - Modo pruebas"
+sleep 5
+sqlplus PROFESOR/PROFESOR@10.1.35.51/asir<<EOF
+update RESULTADOS set valoracion='MALO';
+commit;
+select * from resultados;
+exit
+EOF
+echo "Pruebas finalizadas - Modo pruebas"

@@ -42,3 +42,21 @@ loop end;
 end;
 /
 EOF
+# Ampliación del tablespace carreras (sin crear otro dbf).
+sqlplus / as sysdba<<EOF
+alter tablespace carreras resize 1024;
+exit
+EOF
+
+# Llenado de tablespace con otra tabla nueva. 
+sqlplus BERMUDEZ/BERMUDEZ51@10.1.35.51/asir<<EOF
+drop table llenar;
+create table llenar (id number, text varchar(255))  tablespace carreras;
+begin
+for i in 1 .. 50000 loop 
+insert into llenar (id,texto)
+values(i,'lleno');
+end loop;
+end;
+/
+select * from llenar;
