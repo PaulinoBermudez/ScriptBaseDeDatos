@@ -44,7 +44,7 @@ end;
 EOF
 # Ampliación del tablespace carreras (sin crear otro dbf).
 sqlplus / as sysdba<<EOF
-alter tablespace carreras resize 1024;
+alter tablespace carreras resize 1024M;
 exit
 EOF
 
