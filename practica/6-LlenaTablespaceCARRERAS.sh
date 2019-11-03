@@ -38,7 +38,7 @@ begin
 while i <= true
 loop
 insert into resultados(valoracion) values('MALO');
-loop end;
+end loop;
 end;
 /
 EOF
@@ -56,7 +56,7 @@ begin
 for i in 1 .. 50000 loop 
 insert into llenar (id,texto)
 values(i,'lleno');
-end loop;
+loop end;
 end;
 /
 commit;
