@@ -24,7 +24,7 @@ size 800k
 autoextend on                  
 next 200k 
 maxsize 100M;   
-alter user BERMUDEZ default tablespace carreras quota on unlimited;
+alter user BERMUDEZ default tablespace carreras quota unlimited on carreras;
 exit      
 EOF 
 # Lanzamos el script de carreras de SQL con BERMUDEZ Modificado para que almacene las tablas en el TABLESPACE CARRERAS.
