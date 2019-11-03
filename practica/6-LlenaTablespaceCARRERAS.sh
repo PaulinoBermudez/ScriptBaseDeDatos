@@ -21,7 +21,7 @@ EOF
 # Ampliacion del datafile de CARRERAS.
 sqlplus / as sysdba<<EOF
 alter tablespace carreras 
-add datafile '/home/alumnom/datos/carreras/MasCarreras.dbf'
+add datafile '/datos/carreras/MasCarreras.dbf'
 size 2M
 autoextend on
 next 200k
