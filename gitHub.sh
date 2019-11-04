@@ -25,7 +25,6 @@ echo "**************"
 echo "Practica ==> OK"
 echo "**************"
 sleep 5
-clear
 git status
 echo "" 
 echo "" 
