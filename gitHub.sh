@@ -32,7 +32,7 @@ echo "+--------------------------+"
 echo "|     Trabajo terminado    |"
 echo "+--------------------------+"
 read -p "Limpiar pantalla (Y/N)" resp
-case $resp 
+case $resp in
     Y) clear;;
     y) clear;;
     N) sleep 2 echo "OK!";;
