@@ -35,3 +35,4 @@ read -p "Limpiar pantalla (Y/N)" resp
 if [ $resp == 'Y'] || [ $resp == 'y'] {
     clear
 }
+fi
