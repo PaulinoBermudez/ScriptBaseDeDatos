@@ -14,10 +14,10 @@ echo "**************"
 echo "Apuntes ==> OK"
 echo "**************"
 git commit -m "Script iniciales de bases de datos en Centos 7" &&
+git push origin master
 echo "**************"
 echo "Scripts ==> OK"
 echo "**************"
-git push origin master
 git add . &&
 git commit -m "Script de Base de Datos Oracle en Centos 7" &&
 git push origin master
@@ -35,7 +35,7 @@ read -p "Limpiar pantalla (Y/N)" resp
 case $resp in
     Y) clear;;
     y) clear;;
-    N) sleep 2 echo "OK!";;
-    n) sleep 2 echo "OK!";;
+    N) sleep 2; echo "OK!";;
+    n) sleep 2; echo "OK!";;
     *) echo "Opción no válida";;
 esac
