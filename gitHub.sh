@@ -32,6 +32,10 @@ echo "+--------------------------+"
 echo "|     Trabajo terminado    |"
 echo "+--------------------------+"
 read -p "Limpiar pantalla (Y/N)" resp
-if [[ $resp == 'Y'] || [ $resp == 'y']] then
-clear
-fi
+case $resp 
+    Y) clear;;
+    y) clear;;
+    N) sleep 2 echo "OK!";;
+    n) sleep 2 echo "OK!";;
+    *) echo "Opción no válida";;
+esac
