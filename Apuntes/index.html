@@ -45,11 +45,209 @@
 						<!-- Intro -->
 							<article id="intro">
 								<h2 class="major">Intro</h2>
-								<span class="image main"><img src="images/pic01.jpg" alt="" /></span>
-								<p>Aenean ornare velit lacus, ac varius enim ullamcorper eu. Proin aliquam facilisis ante interdum congue. Integer mollis, nisl amet convallis, porttitor magna ullamcorper, amet egestas mauris. Ut magna finibus nisi nec lacinia. Nam maximus erat id euismod egestas. By the way, check out my <a href="#work">awesome work</a>.</p>
-								<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis dapibus rutrum facilisis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam tristique libero eu nibh porttitor fermentum. Nullam venenatis erat id vehicula viverra. Nunc ultrices eros ut ultricies condimentum. Mauris risus lacus, blandit sit amet venenatis non, bibendum vitae dolor. Nunc lorem mauris, fringilla in aliquam at, euismod in lectus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. In non lorem sit amet elit placerat maximus. Pellentesque aliquam maximus risus, vel sed vehicula.</p>
+								<span class="image main"><img src="images/contents.jpg" width="1080" height="720" alt=""></span>
+								<p>
+									<ul>
+										<li><a href="#instalacion">Instalación del software de base de datos</a></li>
+										<li><a href="#partesBD">Instancia / listener /  base de datos</a></li>
+										<li><a href="#crearInstancia">Creación de una instancia de base de datos</a></li>
+										<li><a href="#crearListener">Creación de un listener</a></li>
+										<li><a href="#StartStopBD">Arrancar y parar la base de datos</a></li>
+										<li><a href="#ConectLocal">Conexión en local</a></li>
+										<li><a href="#ConectRemote">Conexión remota</a></li>
+										<li><a href="#Things">Cosas que hemos aprendido de pasada</a></li>
+										<li><a href="#Resume">Diagrama resumen</a></li>
+									</ul>
+								</p>
 							</article>
-
+							<!-- Instalación -->
+							<article id="instalacion">
+								<h2 class="major"><a href="#intro">Volver atrás</a></h2>
+								<h1>Instalación del software de base de datos.</h1>
+								<p>
+									<h2>Prerequisitos.</h2>
+									<p>
+										Será una máquina virtual de VirtualBox. <br>
+										Fichero OVA que contiene:
+										<ul>
+											<li>Centos 7 -  instalado (inglés).</li>
+											<li>Oracle 18c descargado.</li>
+										</ul>
+									</p>
+									<h2>Resolver el propio nombre.</h2>
+									<p>
+										Cambiar el nombre de la máquina. Editamos los ficheros:
+										<ul>
+											<li>
+												<code>
+													/etc/hostname
+												</code>
+											</li>
+											<li>
+												<code>
+													/etc/hosts &rarr; Hay que añadir el nombre de la máquina en 127.0.0.1 ó ::1
+												</code>
+											</li>
+										</ul>
+										Seguidamente de ello, <strong>reiniciar la máquina</strong> para guardar los cambios.
+									</p>
+									<h2>Entorno gráfico.</h2>
+									<p>
+										El instalador más cómodo de Oracle necesita un sistema de ventanas. Hay varias opciones: 
+										<ul>
+											<li>
+												Arrancar el modo gráfico en la máquina virtual. <br>
+												<code>
+													startx
+												</code>
+											</li>
+											<li>
+												Conexión SSH con redirección de protocolo X11. <br>
+												<code>
+													ssh -X alumno@IP-servidor
+												</code>
+											</li>
+											<li>
+												Arrancar un servidor <strong>VNC</strong> en Centos. <br>
+												<pre><code>sudo yum install vnc-server <br> vncserver :0</code></pre>
+											</li>
+										</ul>
+									</p>
+									<h2>Oracle 18c.</h2>
+									<p>
+										<h3>Descomprimir el instalador.</h3>
+										<p>
+											descomprimir sus ficheros en el directorio <i>$HOME/oracle-install-18c</i>
+											<ul>
+												<li>Sugerencia: línea de comandos <code>unzip</code></li>
+												<li>Directorio $HOME/oracle-install/</li>
+												<li>Fichero: LINUX.X64_180000_db_home.zip</li>
+											</ul>
+											Para hacer sitio,  podemos borrar los ficheros .zip una vez descomprimidos.
+										</p>
+										<h3>Arrancar el instalador.</h3>
+										<p>
+											&rarr; Se arranca con <code>./runInstaller</code>. <br>
+											&rarr; Instalar sólo el software de la base de datos. <br>
+											&rarr; Elegir <i>Single instance database</i>. <br>
+											&rarr; Edición Enterprise.
+										</p>
+										<h3>Direcitorios de Oracle.</h3>
+										<p>
+											Dejamos los directorios por defecto:
+											<ul>
+												<li>Oracle Base: <code>/home/alumno/oracle-18c</code></li>
+												<li>Software: <code>/home/alumno/oracle-install-18c</code></li>
+												<li>
+													Inventory: <code>/home/alumno/oraInventory</code>
+													<ul>
+														<li>dejamos el grupo a alumno</li>
+													</ul>
+												</li>
+											</ul>
+										</p>
+										<h3>Grupos de Linux.</h3>
+										<p>
+											Elegir <i>wheel</i>. 
+											<ul>
+												<li>
+													Es un grupo de administrador de Centos.
+												</li>
+												<li>
+													El usuario alumno ya pertenece a él.
+												</li>
+											</ul>
+										</p>
+										<h3>Comprobaciones.</h3>
+										<p>
+											Ignoramos la falta de memoria.
+											El instalador detectará algunos errores, pero genera unso scripts de <i>fix</i>.
+											<ul>
+												<li>Son parámetros del kernel de Linux.</li>
+												<li>Los scripts se ejecutan como administrador.</li>
+											</ul>
+											Se necesitan instalar varios paquetes de software.
+											<ul>
+												<li><code>sudo yum install <i>paquete</i></code></li>
+												<li>Es necesario que la máquina virtual tenga acceso a Internet</li>
+											</ul>
+											También hay un paquete de dependencias oracle-database-preinstall-18c-1.0-1.el7.x86_64.rpm),que se puede instalar con
+											<code>yum localinstall</code>
+										</p>
+										<h3>Script de configuración</h3>
+										<p>
+											<code>
+												/home/alumno/oraInventory/orainstRoot.sh
+											</code>
+											<br>
+											<code>
+												/home/alumno/oracle-install-18c/root.sh
+											</code>
+										</p>
+										<h3>Finalización.</h3>
+										<p>
+											Necesitamos definir algunas variables de entorno (ficheros ~/.profile, ~/.bash_profile, ~/.bashrc)
+											<ul>
+												<li>ORACLE_HOME: /home/alumno/oracle-install-18c</li>
+												<li>Incluir $ORACLE_HOME/bin en el PATH</li>
+											</ul>
+											También se puede usar el comando <code>oraenv</code> para definir estas variables.
+										</p>
+										<h3>Reiniciar.</h3>
+										<p>
+											En un servidor real no se hace, pero es más fácil para actualizar todas las variables de entorno. Después, podemos ver que los programas están, pero no hacen nada. 
+											<br>
+											<code>
+												sqlplus / as sysdba
+											</code>
+										</p>
+									</p><!-- Oracle 18c-->
+								</p> <!-- Instalacion del sw de BD-->
+							</article>
+							<!-- Instancia, listener y base de datos -->
+							<article id="partesBD">
+								<h2 class="major"><a href="#intro">Volver atrás</a></h2>
+								<h2>Instancia.</h2>
+								<p>
+									Varios procesos funcionando. Permite manipular una o varias bases de datos (En Oracle solo una).
+								</p>
+								<h2>Listener.</h2>
+								<p>
+									Proceso que admite <b>conexiones</b> de clientes.<br>
+									En otros SGBD (MySQL) la instancia es su propio listener, conecta los clientes con la instancia pedida.
+								</p>
+								<h2>Base de datos.</h2>
+								<p>
+									Varios ficheros contiene datos, índices, esquema,...
+								</p>
+								<h2>Instancias y bases de DATOS</h2>
+								<p>
+									<img src="images/nstancias y bases de DATOS.PNG" width="530" height="250" alt=""> <br> Instancia y base de datos. <br>
+									<img src="images/Ejemplo de listener.PNG" width="530" height="250" alt=""> <br> Ejemplo de listener.
+								</p>
+							</article>
+							<!-- Creacion de instancia -->
+							<article id="crearInstancia">
+							<h2 class="major"><a href="#intro">Volver atrás</a></h2>
+							<h2>Creación de una instancia de base de datos</h2>
+							<p>
+								Comando <code>dbca</code>.  No estará en el PATH si no se ha incluido (por ejemplo, con oraenv), utilizar la configuración típica:
+								<ul>
+									<li>Nombre: asir</li>
+									<li>Que <strong>no sea container database</strong></li>
+									<li>Recordar la contraseña</li>
+								</ul>
+								Guardar la información de la página de resumen.
+								<h3>Password management.</h3>
+								<p>
+									Lista de usuarios, se puede: 
+									<ul>
+										<li>Bloquearse o desbloquearse.</li>
+										<li>Cambiar su contraseña.</li>
+									</ul>
+								</p>
+							</p>
+							</article>
 						<!-- Work -->
 							<article id="work">
 								<h2 class="major">Work</h2>
