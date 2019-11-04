@@ -31,3 +31,7 @@ echo ""
 echo "+--------------------------+"
 echo "|     Trabajo terminado    |"
 echo "+--------------------------+"
+read -p "Limpiar pantalla (Y/N)"
+if [ $resp == 'Y'] || [ $resp == 'y'] {
+    clear
+}
