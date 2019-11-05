@@ -62,7 +62,7 @@
 							</article>
 							<!-- Instalación -->
 							<article id="instalacion">
-								<h2 class="major"><a href="#intro">Volver atrás</a></h2>
+							<h4 class="major"><a href="#intro">Volver atrás</a></h4>
 								<h1>Instalación del software de base de datos.</h1>
 								<p>
 									<h2>Prerequisitos.</h2>
@@ -206,7 +206,7 @@
 							</article>
 							<!-- Instancia, listener y base de datos -->
 							<article id="partesBD">
-								<h2 class="major"><a href="#intro">Volver atrás</a></h2>
+							<h4 class="major"><a href="#intro">Volver atrás</a></h4>
 								<h2>Instancia.</h2>
 								<p>
 									Varios procesos funcionando. Permite manipular una o varias bases de datos (En Oracle solo una).
@@ -228,7 +228,7 @@
 							</article>
 							<!-- Creacion de instancia -->
 							<article id="crearInstancia">
-							<h2 class="major"><a href="#intro">Volver atrás</a></h2>
+						<h4 class="major"><a href="#intro">Volver atrás</a></h4>
 							<h2>Creación de una instancia de base de datos</h2>
 							<p>
 								Comando <code>dbca</code>.  No estará en el PATH si no se ha incluido (por ejemplo, con oraenv), utilizar la configuración típica:
@@ -247,6 +247,276 @@
 									</ul>
 								</p>
 							</p>
+							</article>
+							<!-- Crear Listener-->
+							<article id="crearListener">
+							<h4 class="major"><a href="#intro">Volver atrás</a></h4>
+								<h2>Creación de un listener</h2>
+								<p>
+									Permiten las conexiones de clientes remotos. Comando <code>netca</code>
+								<ul>
+									<li>Listener configuration</li>
+									<li>Nombre del listener: LISTENER</li>
+									<li>Protocolo TCP</li>
+									<li>Puerto 1521</li>
+								</ul>
+								Comprobar la configuración creada en el fichero <code>listener.ora</code>. 
+								Si luego falla, revisar <code>ADR_BASE_LISTENER</code>.
+								</p>
+								<h2>Arrancar y parar el listener</h2>
+								<p>
+									<ul>
+										<li>
+											<h4>Arrancar</h4> <i>lsnrctl start</i>
+										</li>
+										<li>
+											<h4>Parar</h4> <i>lsnrctl stop</i>
+										</li>
+										<li>
+											<h4>Comprobar si la instancia se ha conectado</h4> <i>lsnrctl status</i>
+										</li>
+									</ul>
+								</p>
+								<h2>Arrancar y parar la base de datos</h2>
+								<p>
+									Se necesitan las variables <i>ORACLE_HOME, ORACLE_SID, PATH, ORACLE_BASE</i>. 
+									Se definen <strong>manualmente</strong> con ayuda del script <i>oraenv.</i> <br>
+									<p>
+										<code>
+											source oraenv
+										</code>
+									</p>
+									Arrancar y parar la base de datos. <br>
+									<code>
+										dbstart $ORACLE_HOME 
+									</code>
+									<code>
+										dbshut $ORACLE_HOME
+									</code>
+									Arrancar y parar el listener. Comprobar que se admiten conexiones. 
+<pre><code>lsnrctl start
+lsnrctl stop
+lsnrctl status</code></pre>
+								</p>
+							</article>
+							<!-- Conexion local-->
+							<article id="ConectLocal">
+							<h4 class="major"><a href="#intro">Volver atrás</a></h4>
+								<h2>Conexión en local</h2>
+								<p>
+									Después de la creación de un listener y una instancia, ya podemos conectarnos a la base de datos.
+									Recordatorio: Debemos tener configuradas las variables de entorno.
+									<ul>
+										<li>ORACLE_SID:El nombre que de a la base de datos (asir)</li>
+										<li>PATH:Debe incluir $ORACLE_HOME/bin</li>
+										<li>Se puede poner también con <code>oraenv</code></li>
+									</ul>
+									<code>sqlplus / as sysdba</code>
+								</p>
+							</article>
+							<!-- Conexión remota -->
+							<article id="ConectRemote">
+								<h4 class="major"><a href="#intro">Volver atrás</a></h4>
+								<h2>Acceso por redes</h2>
+								<p>
+									Es necesario conocer la IP de nuestro servidor. 
+									<ul>
+										<li><code>ifconfig</code></li>
+										<li><code>hostname -I</code></li>
+										<li><code>ip a</code></li>
+									</ul>
+									Es necesario que el ordenador cliente pueda acceder al servidor. 
+									<ul>
+										<li>Tipo de conexión de la máquina virtual: mejor <i>bridged</i></li>
+										<li>ping</li>
+										<li>Firewall: <code>systemctl disable firewalld</code></li>
+									</ul>
+									<h3>Conexión remota</h3>
+									<p>
+										Es necesario conocer la IP o nombre del ordenador remoto, si nos fiamos de DHCP, cada día puede ser una IP distinta. 
+										Es mejor usar un nombre:
+										<ul>
+											<li>DNS: Muy difícil</li>
+											<li>Nombres netbios de Windows</li>
+											<li>Nombres zerocconf/avahi de Linux/Mac</li>
+										</ul>
+										<h3>Avahi</h3>
+										<p>
+											Instalar <i>avahi</i> y <i>avahi-tools</i>. Activar opciones <i>publish-hinfo</i> y <i>publish-workstation</i>. 
+											Desactivar el firewall, importante: el nombre afecta al fichero <i>listener.ora</i>. <br>
+											El nombre de red será  el que tengamos más .local. Por ejemplo: <br>
+											<code>
+												alumnoASGBD.local
+											</code>
+											Con esto un Windows puede encontrar a un linux. Para que Linux encuentre a otro linux, hay que cambiar <code>/etc/nsswitch.conf</code>
+											En <strong>Centos</strong>, hay que instalar <code>nss_mdns</code>.
+										</p>
+										<h3>Samba</h3>
+										<p>
+											<a href="https://www.howtoforge.com/samba-server-installation-and-configuration-on-centos-7" target="_blank" rel="noopener noreferrer">Instalar y conf. Samba en Centos 7</a>
+<pre><code>
+sudo yum install -y samba samba-client samba-common 
+systemctl enable smb.service 
+systemctl enable nmb.service
+</code></pre>
+											Cambiar el fichero <code>smb.conf</code>, el <code>netbios name</code> &rarr; Máximo 15 caracteres, sin guiones. <br>
+											<strong>Importante:</strong>el nombre afecta al fichero <i>listener.ora</i>
+										</p>
+										<h3>Acceso via Web</h3>
+										<p>
+											Al crear la base de datos con <i>dbca</i> se configura el acceso <b>Enterprise Manager.</b> <br>
+											<blockquote>
+												URL: https://nombre-o-ip:5000/em/
+											</blockquote> <br>
+											Tenemos IP dinámica, por lo que debemos configurar una resolución por nombre. 
+											<ul>
+												<li>DNS es complicado</li>
+												<li>Usaremos avahi entre linux y samba entre linux y Windows</li>
+											</ul>
+										</p>
+									</p>
+								</p>
+								<h2>Instalación de sqlplus</h2>
+								<p>
+									El cliente sqlplus viene en la instalación de Oracle, pero tambiñen puede instalarse por separado. <br>
+									<ul>
+										<li><a href="http://www.oracle.com/technetwork/topics/linuxx86-64soft-092277.html" target="_blank" rel="noopener noreferrer">Instalar SQLPLUS Client (Linux)</a></li>
+										<li><a href="https://download.oracle.com/otn_software/linux/instantclient/193000/instantclient-basic-linux.x64-19.3.0.0.0dbru.zip" target="_blank" rel="noopener noreferrer">Descargar Instancia Client para Linux </a></li>
+										<li><a href="https://download.oracle.com/otn_software/linux/instantclient/193000/instantclient-sqlplus-linux.x64-19.3.0.0.0dbru.zip" target="_blank" rel="noopener noreferrer">Descargar Sqlplus Client Linux</a></li>
+									</ul>
+									Tras descomprimir, hay que definir las variables ORACLE_HOME y LD_LIBRARY_PATH al directorio de instalación. Puede ser necesaria la librería <code>libaio</code> <br>
+									Para conectarse:
+									<p>
+										<code>
+											sqlplus username/password@host:port/service
+										</code> <br>
+										<code>
+											sqlplus sys/alumno@centos7.local/asir as sysdba
+										</code>
+									</p>
+								</p>
+								<h2>Instalación de SQLDeveloper en Centos.</h2>
+								<p>
+									Se necesita JDK 1.8, se instalan los ficheros <i>sqldeveloper-4.1.5.21.78-1.noarch.rpm</i> y <i>jdk-8u111-linux-x64.rpm</i>
+									<br>
+									<a href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html" target="_blank" rel="noopener noreferrer">Descargar JDK 8</a>
+									<br>
+									<a href="http://www.oracle.com/technetwork/developer-tools/sql-developer/downloads/index.html" target="_blank" rel="noopener noreferrer">Descargar SQL Developer </a>
+									<br>
+									Arrancar sqldeveloper desde consola - preguntará por el directorio de instalación del JDK.
+								</p>
+								<h2>Instalación de SQLDeveloper en Ubuntu</h2>
+								<p>
+									Se necesita JDK 1.8. <br>
+									Se descarga el fichero <a href="http://www.oracle.com/technetwork/developer-tools/sql-developer/downloads/index.html" target="_blank" rel="noopener noreferrer"> <i>sqldeveloper-xxxx-no-jre.zip</i></a>
+									<br>
+									Se descomprime y se ejecuta sqldeveloper.sh
+								</p>
+							</article>
+							<!-- Cosas que hemos aprendido de pasada. -->
+							<article id="Things">
+								<h4 class="major"><a href="#intro">Volver atrás</a></h4>
+								<h2>Cosas que hemos aprendido de pasada</h2>
+								<p>
+									<ul>
+										<li>Variables de entorno - Variable <b>PATH</b></li>
+										<li>Conexiones por <b>ssh</b> - Con redirección del <b>Xserver</b></li>
+										<li>Edición de ficheros de texto</li>
+										<li>Instalación de paquetes en Centos</li>
+										<li>Conexiones de red (bridged,NAT)</li>
+										<li>Elevación de permisos con <i>sudo</i></li>
+										<li>Descompresión de ficheros ZIP</li>
+									</ul>
+									Nada de esto es directamente base de datos pero ja sido necesario para instalar Oracle.
+									<h3>Comandos</h3>
+									<p>
+										<table>
+											<tr>
+												<td>cd</td>
+												<td>Cambia el direcotrio actual</td>
+											</tr>
+											<tr>
+												<td>echo</td>
+												<td>Escribe los parámetros pasados</td>
+											</tr>
+											<tr>
+												<td>df</td>
+												<td>Espacio de disco usado</td>
+											</tr>
+											<tr>
+												<td>unzip</td>
+												<td>Descomprimir un zip</td>
+											</tr>
+											<tr>
+												<td>updatedb</td>
+												<td>Actualiza la lista de ficheros de disco</td>
+											</tr>
+											<tr>
+												<td>locate</td>
+												<td>Busca un fichero la lista de <i>updatedb</i></td>
+											</tr>
+											<tr>
+												<td>ssh</td>
+												<td>Conexión remota</td>
+											</tr>
+											<tr>
+												<td>grep</td>
+												<td>Busca líneas con un texto</td>
+											</tr>
+											<tr>
+												<td>nano</td>
+												<td>Editor de ficheros</td>
+											</tr>
+											<tr>
+												<td>netstat</td>
+												<td>Ver conexiones de red</td>
+											</tr>
+											<tr>
+												<td>nc</td>
+												<td>Conectar por TCP o UDP</td>
+											</tr>
+											<tr>
+												<td>$var</td>
+												<td>Valor de una variable (de export y env)</td>
+											</tr>
+											<tr>
+												<td>|</td>
+												<td>Manda la salid de un programa a la entrada de otro</td>
+											</tr>
+											<tr>
+												<td>$HOME/.bashrc</td>
+												<td>Script de inicio del usuario</td>
+											</tr>
+											<tr>
+												<td>source</td>
+												<td>Ejecuta un script dento de la shell actual</td>
+											</tr>
+											<tr>
+												<td>export</td>
+												<td>Define una variable</td>
+											</tr>
+											<tr>
+												<td>env</td>
+												<td>Lista de variables</td>
+											</tr>
+											<tr>
+												<td>PATH</td>
+												<td>Lista de directorios donde se buscan comandos</td>
+											</tr>
+											<tr>
+												<td>history</td>
+												<td>Lista de comandos introducidos en la shell</td>
+											</tr>
+										</table>
+									</p>
+								</p>
+							</article>
+							<article id="Resume">
+								<h4 class="major"><a href="#intro">Volver atrás</a></h4>
+								<h2>Diagrama resumen</h2>
+								<p>
+									<img src="images/esquema-resumen.PNG" width="630" height="1050" alt="">
+								</p>
 							</article>
 						<!-- Work -->
 							<article id="work">
