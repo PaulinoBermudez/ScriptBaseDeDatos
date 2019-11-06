@@ -31,8 +31,8 @@
 						<nav>
 							<ul>
 								<li><a href="#intro">Intro</a></li>
-								<li><a href="#work">Work</a></li>
-								<li><a href="#about">About</a></li>
+								<li><a href="#work">Arquitectura </a></li>
+								<li><a href="#about"> Usuarios y privile</a></li>
 								<li><a href="#contact">Contact</a></li>
 								<!--<li><a href="#elements">Elements</a></li>-->
 							</ul>
@@ -511,6 +511,7 @@ systemctl enable nmb.service
 									</p>
 								</p>
 							</article>
+							<!-- Resumen -->
 							<article id="Resume">
 								<h4 class="major"><a href="#intro">Volver atrás</a></h4>
 								<h2>Diagrama resumen</h2>
@@ -518,14 +519,244 @@ systemctl enable nmb.service
 									<img src="images/esquema-resumen.PNG" width="630" height="1050" alt="">
 								</p>
 							</article>
-						<!-- Work -->
+						<!-- Work Schema - Arquitecture -->
 							<article id="work">
-								<h2 class="major">Work</h2>
-								<span class="image main"><img src="images/pic02.jpg" alt="" /></span>
-								<p>Adipiscing magna sed dolor elit. Praesent eleifend dignissim arcu, at eleifend sapien imperdiet ac. Aliquam erat volutpat. Praesent urna nisi, fringila lorem et vehicula lacinia quam. Integer sollicitudin mauris nec lorem luctus ultrices.</p>
-								<p>Nullam et orci eu lorem consequat tincidunt vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus pharetra. Pellentesque condimentum sem. In efficitur ligula tate urna. Maecenas laoreet massa vel lacinia pellentesque lorem ipsum dolor. Nullam et orci eu lorem consequat tincidunt. Vivamus et sagittis libero. Mauris aliquet magna magna sed nunc rhoncus amet feugiat tempus.</p>
+								<h2 class="major">Arquitectura de Oracle.</h2>
+								<span class="image main"><img src="images/schema.jpg" width="850" height="480" alt="" /></span>
+								<p>
+									<ul>
+										<li><a href="#arquitectura">Arquitectura</a></li>
+										<li><a href="#arranqueyparada">Arranque y parada</a></li>
+										<li><a href="#vistas">Vistas</a></li>
+										<li><a href="#bibliografia">Bibliografía</a></li>
+									</ul>
+								</p>
 							</article>
-
+						<!-- Arquitectura -->
+							<article id="arquitectura">
+								<h4 class="major"><a href="#work">Volver atrás</a></h4>
+								<h2>Arquitectura</h2>
+								<p>
+									Oracle es un sistema complejo. Para hacerlo más seguro, sus tareas se distribuyen entre muchos procesos. Si un procesp falla, los demás pueden intentar seguir trabajando. <br>
+									<img width="850" height="480"src="images/arquitectura.PNG" alt="">
+									<h3>Algunos procesos.</h3>
+									<p>
+										<table>
+											<tr>
+												<td>PMON(Process MONitor)</td>
+												<td>Monitor de procesos, se encarga de controlar los otros procesos en background y de recuperarlos cuando uno de ellos falla.</td>
+											</tr>
+											<tr>
+												<td>SMON(System MONitor Process)</td>
+												<td>Recupera transacciones. realiza tareas de limpieza: recuperar segmentos temporales, combinar extensiones contiguas y disponibles,...</td>
+											</tr>
+											<tr>
+												<td>DWBn (Database Writer Process)</td>
+												<td>Escribe  el contenido de los buffers en los datafiles. n puede ser 0,1,...,9,a,...,j</td>
+											</tr>
+											<tr>
+												<td>LGWR(Log Writer Process)</td>
+												<td>Gestión del buffer de redo, escribiendo su contenido en los archivos log.</td>
+											</tr>
+											<tr>
+												<td>CKPT(ChecKPoinT Process)</td>
+												<td>Actualiza los datafiles y el fichero de control cuando se establece un punto de control (checkpoint).</td>
+											</tr>
+											<tr>
+												<td>RECO (RECOverer Process)</td>
+												<td>Necesario ante fallos en transacciones distribuidas.</td>
+											</tr>
+										</table>
+									</p>
+									<h3>SGA y PGA.</h3>
+									<p>
+										<strong>PGA.</strong>Program Global Area. Es la zona de memoria dedicada a un proceso. <br>Global: si admite mñas de una conexión, se comparte entre conexiones. <br>
+										<strong>SGA.</strong>System Global Area. Memoria compartida entre todos los procesos de Oracle. <br>
+										<img width="850" height="480"src="images/SGAyPGA.PNG" alt="">
+									</p>
+									<h3>Procesos de usuario y procesos de sistema.</h3>
+									<p>
+										Los procesos de usuario no se conectan directamente a la SGA. Oracle crea procesos intermedios para aislarlos. <br>
+										<img width="850" height="480"src="images/SGA-Diagram.PNG" alt="">
+									</p>
+								</p>
+							</article>
+						<!-- Arranque y parada -->
+							<article id="arranqueyparada">
+								<h4 class="major"><a href="#work">Volver atrás</a></h4>
+								<h2>Arranque y parada.</h2>
+								<p>
+									Oracle tiene varios estados. 
+									<table>
+										<tr>
+											<td><strong>Shutdown</strong></td>
+											<td>Todo parado</td>
+										</tr>
+										<tr>
+											<td><strong>Nomount</strong></td>
+											<td>Memoria compartida reservada</td>
+										</tr>
+										<tr>
+											<td><strong>Mount</strong></td>
+											<td>Fichero de control abierto</td>
+										</tr>
+										<tr>
+											<td><strong>Open</strong></td>
+											<td>Fichero de datos abierto. Los clientes pueden conectarse.</td>
+										</tr>
+									</table>
+									<img width="850" height="480"src="images/status.PNG" alt="">
+								</p>
+								<h3>¿Por qué tantos modos?</h3>
+								<p>
+									<strong>Shutdown y open</strong> son los modos habituales. <br>
+									<strong>Nomount</strong> para recuperar la base de datos de errores(si falta algún fichero). <br>
+									<strong>Mount</strong> para habilitar y deshabilitar el redo log. Para recuperar la base de datos de errores (sin usuarios)
+									<cite>
+										Conclusión: con suerte, solo <strong>shutdown</strong> y <strong>open.</strong>
+									</cite>
+								</p>
+							</article>
+						<!-- Vistas -->
+							<article id="vistas">
+								<h4 class="major"><a href="#work">Volver atrás</a></h4>
+								<h2>Vistas.</h2>
+								<p>
+									En un sistema relacional, toda la información se guarda en forma de relaciones. Las vistas son representaciones de otras vistas o relaciones. 
+									<ul>
+										<li>Quitando algunas filas o columnas.</li>
+										<li>Uniendo unas tablas con otras.</li>
+									</ul>
+									Tanto las tablas como las vistas son relaciones.
+								</p>
+								<h3>Vistas de Oracle</h3>
+								<p>
+									La información acerca de la base de datos también se almacena en relaciones de la base de datos. Generalmente, en forma de vistas. Ejemplos: 
+									<ul>
+										Tablas: nombres, propietario,... <br>
+										Campos de las tablas: Nombre, tipo, longitud,... <br>
+										Restricciones <br>
+										Usuarios: nombre, contraseñas,... <br>
+										Tablespaces
+									</ul>
+									<h3>Tipos de vistas de Oracle.</h3>
+									<p>
+										<ul>
+											<li>
+												<strong>Estáticas.</strong>
+												Cambian solo si se produce un cambio en los objetos de la base de datos (tablas, vistas, usuarios,...) <br>
+												<code>
+													create, alter, drop, grant, revoke, ... 
+												</code> <br>
+												Documentación de Oracle: 
+												<ul>
+													<li><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14237/statviews_2.htm#CCHHHJIF" target="_blank" rel="noopener noreferrer">Vistas Estáticas 1</a></li>
+													<li><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14237/statviews_3.htm#g1720197" target="_blank" rel="noopener noreferrer">Vistas Estáticas 2</a></li>
+													<li><a href="https://docs.oracle.com/cd/B19306_01/server.102/b14237/statviews_4.htm#BABDFHFI" target="_blank" rel="noopener noreferrer">Vistas Estáticas 3</a></li>
+												</ul>
+											</li>
+											<li>
+												<strong>Dinámicas.</strong>
+												Actualizadas constantemente. Usuarios conectados, memoria disponible, consultasa en curso,... <br>
+												<a href="https://docs.oracle.com/cd/B19306_01/server.102/b14237/dynviews_1.htm" target="_blank" rel="noopener noreferrer">Vistas Dinámicas - Oracle</a>
+											</li>
+										</ul>
+										<table>
+											<tr>
+												<td>USER_XXX</td>
+												<td>Estática</td>
+												<td>Acerca de los objetos propiedad del usuario</td>
+											</tr>
+											<tr>
+												<td>ALL_XXX</td>
+												<td>Estática</td>
+												<td>Objetos que puede acceser el usuario</td>												
+											</tr>
+											<tr>
+												<td><a href="https://sqljana.wordpress.com/2016/12/21/oracle-data-dictionary-views-user-vs-all-vs-dba-views-100-level-basics/" target="_blank" rel="noopener noreferrer">DBA_XXX</a></td>
+												<td>Estática</td>
+												<td>Todos los objetos de la base de datos <a href="https://sqljana.wordpress.com/2016/12/21/oracle-data-dictionary-views-user-vs-all-vs-dba-views-100-level-basics/" target="_blank" rel="noopener noreferrer">(*)</a></td>												
+											</tr>
+											<tr>
+												<td>V$XXX</td>
+												<td>Dinámica</td>
+												<td>Información dinámica de la instancia</td>												
+											</tr>
+											<tr>
+												<td>GV$XXX</td>
+												<td>Dinámica</td>
+												<td>Información dinámica del cluster</td>													
+											</tr>
+										</table>
+										<strong> Vista comodín:
+											<blockquote>
+												<code>		
+													select * from dict;
+												</code>
+											</blockquote>
+										</strong>
+										<h3>Ejemplos de vistas: ficheros.</h3>
+										<p>
+											<ul>
+												<li>
+													<strong>Tipo de archivo:</strong> &rarr; De Datos (dbf) undo,system y users.<br>
+													<strong>Vista:</strong>
+													<blockquote>
+														<code>
+															v$datafile
+														</code>
+													</blockquote>
+												</li>
+												<li>
+													<strong>Tipo de archivo:</strong> &rarr; Temporales (tmp).<br>
+													<strong>Vista:</strong>
+													<blockquote>
+														<code>
+															v$tempfile
+														</code>
+													</blockquote>
+												</li>
+												<li>
+													<strong>Tipo de archivo:</strong> &rarr; Rehacer o Redo Log (log).<br>
+													<strong>Vista:</strong>
+													<blockquote>
+														<code>
+															v$logfile, v$log
+														</code>
+													</blockquote>
+												</li>
+												<li>
+													<strong>Tipo de archivo:</strong> &rarr; De control. Estructura física de la BD.<br>
+													<strong>Vista:</strong>
+													<blockquote>
+														<code>
+															v$controlfile
+														</code>
+													</blockquote>
+												</li>
+												<li>
+													<strong>Tipo de archivo:</strong> &rarr; De log.<br>
+													<strong>Vista:</strong>
+													<blockquote>
+														<code>
+															v$diag_info
+														</code>
+													</blockquote>
+												</li>
+												<li>
+													<strong>Tipo de archivo:</strong> &rarr; Información de la BD.<br>
+													<strong>Vista:</strong>
+													<blockquote>
+														<code>
+															v$database
+														</code>
+													</blockquote>
+												</li>
+											</ul>
+										</p>
+									</p>
+								</p>
+							</article>
 						<!-- About -->
 							<article id="about">
 								<h2 class="major">About</h2>
