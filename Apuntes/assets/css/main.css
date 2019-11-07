@@ -659,6 +659,24 @@ input, select, textarea {
 			top: 0.25em;
 		}
 
+		.image.radius.container {
+			float: left;
+			width:"33.33%"; 
+			padding: 15px;
+			border-radius: 85%;
+		}
+		.content {
+			float: left;
+			width:"33.33%"; 
+			padding: 15px;
+			border-radius: 85%;
+		}
+		.clearfix::after{
+			content:"";
+			clear: both;
+			display: table;
+		}
+
 		.image.fit {
 			display: block;
 			margin: 0 0 2rem 0;

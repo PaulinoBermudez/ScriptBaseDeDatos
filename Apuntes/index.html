@@ -32,8 +32,9 @@
 							<ul>
 								<li><a href="#intro">Intro</a></li>
 								<li><a href="#work">Arquitectura </a></li>
-								<li><a href="#about"> Usuarios y privile</a></li>
-								<li><a href="#contact">Contact</a></li>
+								<li><a href="#usuariosyprivilegios"> Usuarios y privile</a></li>
+								<li><a href="#about">Acerca de mi</a></li>
+								<li><a href="#contact">Contacto</a></li>
 								<!--<li><a href="#elements">Elements</a></li>-->
 							</ul>
 						</nav>
@@ -41,7 +42,6 @@
 
 				<!-- Main -->
 					<div id="main">
-
 						<!-- Intro -->
 							<article id="intro">
 								<h2 class="major">Intro</h2>
@@ -797,10 +797,270 @@ systemctl enable nmb.service
 									<a href="https://docs.google.com/presentation/d/1pIrg5ZfTOr_j_MxBSMW3pl6jmabko_zvoAJ2ktXPis8/edit" target="_blank" rel="noopener noreferrer"> Vistas de Oracle</a>
 								</p>
 							</article>
+						<!-- Usuarios y privilegios -->
+							<article id="usuariosyprivilegios">
+								<h2>Usuarios, privilegios y roles de Oracle</h2>
+								<p>
+									<h3>Introducción</h3>
+									<p>
+										Oracle puede usarse simultáneamente por varios procesos y clientes. Cada uno puede tener distintos permisos y capacidades. 
+										<ul>
+											<li>Espacio de disco disponible.</li>
+											<li>Gasto de CPU, red.</li>
+											<li>Acceso a diferentes tablas de datos.</li>
+										</ul>
+									</p>
+									<h3>Tablespaces</h3>
+									<p>
+										Oracle almacena datos en los tablespaces. 
+										<blockquote>
+											Conjuntos de ficheros. <br>
+											Normas para su tamaño: inicial, máxim, crecimiento
+										</blockquote>
+										Cada tablespace puede usarse para diferentes funciones.
+										<ul>
+											<li>Datos de usuario o del sistema: <i>permanent tablespace</i></li>
+											<li>Datos de recuperación: <i>undo tablespace</i></li>
+											<li>Datos temporales: <i>temporary tablespace</i></li>
+										</ul>
+										<h4>¿Por qué tantas normas?</h4>
+										<p>
+											<ul>
+												<li>
+													<strong>Disponibilidad</strong> 
+													<ul>
+														<li>
+															Es mejor garantizar el espacio para las tablas.
+														</li>
+														<li>
+															Es mejor ahorrar espacio mientras se pueda.
+														</li>
+													</ul>
+												</li>
+												<li>
+													<strong>Velocidad</strong>
+													<ul>
+														<li>
+															Hacer crecer un fichero es lento.
+														</li>
+														<li>
+															Un fichero que ha crecido poco a poco está disperso en el disco (y es más lento)
+														</li>
+													</ul>
+												</li>
+												<li>
+													<strong>Capacidad</strong> <br>
+													Cada sistema de ficheros tiene un tamaño de fichero máximo.
+												</li>
+											</ul>
+										</p> <!-- Porqué tantas normas-->
+										<h4>Tablespaces por defecto &Rarr;(USSUT)</h4>
+										<p>
+											Por defecto, Oracle crea en una nueva base de datos: 
+											<ul>
+												<li>
+													<strong>[U]sers:</strong> Tablespace asignado por defecto para los <b>datos de todos los usuarios.</b>
+												</li>
+												<li>
+													<strong>[S]ystem:</strong> Datos acerca de la <b>instancia y del diccionario de datos.</b>
+												</li>
+												<li>
+													<strong>[S]ysaux:</strong> <b>Operaciones temporales del administrador</b> que no caben en memoria.
+												</li>
+												<li>
+													<strong>[U]ndo(undotbs1):</strong> Datos para deshacer las transacciones(<b>rollback</b>).
+												</li>
+												<li>
+													<strong>[T]emp:</strong> <b>Operaciones temporales de usuarios</b> que no caben en memoria.
+												</li>
+											</ul>
+											Ver tablespaces por defecto en SQLPLUS:
+											<code>
+												select tablespace_name, contents from dba_tablespaces;
+											</code>
+										</p>
+										<h4>Crear un tablespace</h4>
+										<p>
+<pre><code>CREATE TABLESPACE <i>nombre</i>
+ DATAFILE 'ruta/al/fichero.dbf'
+ AUTOEXTEND ON 
+ NEXT 200k
+ MAXSIZE 2048k;
+</code></pre>										
+										</p>
+										<h4>¿Por qué es tan complicado?</h4>
+										<p>
+											Esta flexibilidad permite: 
+											<ul>
+												<li>
+													Que cada usuario tenga sus tablespaces
+												</li>
+												<li>
+													Que cada tablespace esté en discos distintos (rapidez)
+												</li>
+												
+												<li>
+													Que un tablespace se localice en varios discos (rapidez, tamaño) 
+												</li>
+												<li>
+													Mover tablespaces una vez creados 										
+												</li>
+											</ul>
+										</p>
+										<h4>Conceptos de almacenamiento.</h4>
+										<p>
+											<a href="images/conceptosdealmacenamiento.PNG"><img src="images/conceptosdealmacenamiento.PNG" width="73%" alt=""></a>
+										</p>
+									</p> <!-- tablespaces-->
+									<h3>Usuarios</h3>
+									<p>
+										Oracle tiene dos modos de autentificar usuarios. 
+										<ul>
+											<li>Autentificación de sistema operativo.</li>
+											<li>Autentificación con seguridad nativa oracle</li>
+										</ul>
+										Al instalarlo, elegimos que el grupo <i>wheel</i> era administrador.
+										<h4>Creación de usuarios</h4>
+										<p>
+<pre><code>CREATE USER <i>usuario</i> IDENTIFIED BY <i>contraseña</i>
+DEFAULT TABLESPACE tablespace
+TEMPORARY TABLESPACE tablespaceTemporal 
+QUOTA UNLIMITED ON tablespace 
+QUOTA tamaño ON tablespace 
+ACCOUNT lock/unlock
+</code></pre>
+										</p>
+										<h4>Modificación de usuario</h4>
+										<p>
+											<ul>
+												<li>
+													Modificación de un usuario ya creado. <br>
+													<code>
+														ALTER USER usuario CUALQUIER OPCION VALIDA AL CREAR USUARIO;
+													</code>
+												</li>
+												<li>
+													Borrado de usuario. <br>
+													<code>
+														DROP USER usuario;
+													</code>
+												</li>
+											</ul>
+										</p>
+									</p> <!-- Usuarios -->
+									<h3>Privilegios</h3>
+									<p>
+										Cada usuario puede tener unos permisos distintos. Ya hemos visto dos permisos. 
+										<ul>
+											<li>En qué tablespace se puede escribir</li>
+											<li>Cuántos datos se pueden escribir en esos tablespaces</li>
+											<li>Si una cuenta está bloqueada</li>
+										</ul>
+										Pero hay más permisos. 
+										<table>
+											<tr>
+												<td><strong>Privilegio</strong></td>
+												<td><strong>Objeto sobre el que se aplica</strong></td>
+											</tr>
+											<tr>
+												<td>
+													<i>create,alter,drop</i>
+												</td>
+												<td>
+													table,sequence,view,user,synonym,session
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<i>select,update,delete,insert</i>
+												</td>
+												<td>
+													Sobre campos de tablas y filas.
+												</td>
+											</tr>
+										</table>
+									<h4>Sintaxis de <i>Grant</i></h4>
+									<p>
+<pre><code>grant PRIVILEGIO1,PRIVILEGIO2,...PRIVILEGION 
+on OBJETO 
+to USUARIO 
+<i>with GRANT OPTION</i>;
+<hr>
+create table alumnos(...);
+create user profesor ...; 
+grant select on <b>alumnos</b> to <b>profesor</b>;
+</code></pre>											
+										</p>
+										<h4>Quitar privilegios</h4>
+										<p>
+											Los privilegios se quitan con <code>revoke</code>. <br>
+											Cuando un usuario pierde un privilegio, lo pierden también todos los que recibieron el mismo privilegio a través de él. 
+											Por la cláusula <i>with grant option.</i>
+<pre><code>connect sys/**** 
+grant select on tabla1 to usuario1 with grant option; 
+<hr>
+connect usuario1/*** 
+grant select on tabla1 to usuario2; 
+<hr>
+connect sys/**** 
+<strong>revoke </strong> select on tabla1 from usuario1;
+</code></pre>											
+											Aquí ni usuario1 ni usuario2 tienen privilegios sobre la tabla1.
+										</p>
+									</p> <!-- Privilegios -->
+									<h3>Roles</h3>
+									<p>
+										Asignar todos los privilegios a un usuario es trabajoso, pero factible. 
+										Qué ocurre si tenemos que manejar a muchos usuarios?
+										Los roles permiten dar nombre a un grupo de privilegios. 
+										<ul>
+											<li>Se pueden asignar privilegios a un rol.</li>
+											<li>Y después asignar ese rol a varios usuarios.</li>
+										</ul>
+										<h4>Sintaxis de roles</h4>
+										<p>
+<pre><code>CEATE ROLE nombrerole;
+GRANT privilegios ON objeto TO nombrerole;
+GRANT nombrerole TO usuario1;
+GRANT nombrerole TO usuario2;
+...
+GRANT nombrerole TO usuarion;
+</code></pre>											
+										</p>
+									</p> <!-- Roles -->
+									<h3>Perfiles</h3>
+									<p>
+										Un <i>profile</i> es un conjunto de limitaciones sobre el sistema <strong>Oracle.</strong> <br>
+										No limita acceso a datos, sino al propio SGBD y sistema operativo.
+										<h4>Creación de perfiles</h4>
+										<p>
+<pre><code>CREATE PROFILE nombreperfil LIMIT 
+	session_per_user			UNLIMITED
+	cpu_per_session				UNLIMITED
+	cpu_per_call				30000 
+	connect_time				45 
+	idle_time				300 
+	logical_reads_per_session	 	DEFAULT
+	logical_reads_per_call			1000
+	private_sga				15K 
+	composite_limit				5000000; 
+ALTER SYSTEM SET resource_limit = TRUE scope = BOTH
+</code></pre>											
+										</p>
+										<h4>Asignación de perfil a un usuario</h4>
+										<p>
+											En la creación (create user), o posteriormente. <br>
+											<code>
+												alter user USUARIO profile NOMBREDELPERFIL;
+											</code>
+										</p>
+									</p> <!-- Perfiles -->
+								</p>
+							</article>
 						<!-- About -->
 							<article id="about">
-								<h2 class="major">About</h2>
-								<span class="image main"><img src="images/HC.PNG" alt="" /></span>
+								<h2 class="major">Acerca de mi.</h2>
+								<span class="image main"><img src="images/humancomputing3.0.png" alt="" /></span>
 								<p>
 										Bienvenido a la extensión HC Learning Web de Human Computing 3.0, es el sitio web donde encontrarás diversas formas de crecer y desarrollarte sin dificultad, siguiendo los pasos descritos.
 										Aquí mantenemos la información de interés y cuidando la sencilles para que sea fácil y sencillo de seguir. Es hora de empezar. <br>
@@ -811,7 +1071,7 @@ systemctl enable nmb.service
 
 						<!-- Contact -->
 							<article id="contact">
-								<h2 class="major">Contact</h2>
+								<h2 class="major">Contactoclass="float" </h2>
 								<form method="post" action="#">
 									<div class="fields">
 										<div class="field half">
@@ -836,7 +1096,7 @@ systemctl enable nmb.service
 									<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
 									<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
 									<li><a href="#" class="icon fa-instagram"><span class="label">Instagram</span></a></li>
-									<li><a href="#" class="icon fa-github"><span class="label">GitHub</span></a></li>
+									<li><a href="https://github.com/chunche95" class="icon fa-github"><span class="label">GitHub</span></a></li>
 								</ul>
 							</article>
 
