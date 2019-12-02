@@ -11,5 +11,10 @@ lsnrctl start
 sqlplus / as sysdba <<EOF
 startup open
 EOF
-
+sleep 5
+clear
+echo "----------------------------------------------"
+hostname -I 
+echo "----------------------------------------------"
+sleep 5 
 lsnrctl status
