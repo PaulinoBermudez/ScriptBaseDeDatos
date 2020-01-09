@@ -1560,9 +1560,11 @@ alter system kill session 'sid, serial#';
 									<ul>
 										<li><a href="#exportacion">Exportación de datos</a></li>
 										<li><a href="#importacion">Importación de datos</a></li>
-										<li><a href="#Ejercicios"></a></li>
+										<li><a href="#ejercicios">Ejercicios</a></li>
+										<li><a href="otrassoluciones">Otras soluciones</a></li>
 									</ul>
 								</p>
+								<!-- Exportación -->
 								<h2 id="exportacion">Exportación</h2>
 								<p>
 									Se usa el comando <code>expdp</code> <br>
@@ -1602,9 +1604,84 @@ alter system kill session 'sid, serial#';
 											grant create any directory to EL_USUARIO;
 										</code>
 										<code>
-											create directory 
+											create directory MI-DIRECTORIO to EL_USUARIO;
 										</code>
 									</p>
+									Ejemplo de exportación.
+									<blockquote>
+										[ CHUNCHE95@centosASGBD -] ~ expdp alumno/alumno directory=midir schemas=alumno dumpfile=alumno.dmp logfile=alumno.log 
+									</blockquote>
+								</p>
+								<!-- Importación -->
+								<h2 id="importacion">Importación</h2>
+								<p>
+									Se usa el comando <code>impdp</code> <br>
+									Ayuda con <code>impdp help=yes</code>. 
+									Ejemplo de importación de los datos:
+									<p>
+										<code>
+											impdp scott/tiger DIRECTORY=dirdmp DUMFILE=scott.dmp LOGFILE=scoot.log 
+										</code>
+									</p>
+									Valores válidos para la importación en Oracle:
+									<blockquote>
+										directory <br>
+										dumpfile <br>
+										exclude <i>=schema:"='HR'"</i> <b>-- example</b> <br>
+										full <br>
+										include <i>=TABLE_DATA</i> <b>-- example</b> <br>
+										logfile <br>
+										query <i>=employees:"WHERE department_id &gt 10"</i> <b>-- example</b> <br>
+										remap_data <i>=EMPORIO.EMPNO:BOSS.EMPNO</i> <b>-- example</b> <br>
+										remap_datafile <br>
+										remap_schema <b>IMPORTANTE</b> <br>
+										remap_tablespace <br>
+										schemas <br>
+										tables_exist_action (Opciones: append, replace, skip (por defecto), truncate) <br>
+										tables <br>
+										tablespaces <br>
+									</blockquote>
+								</p>
+								<h4>Importar un schema en <b>otro usuario</b></h4>
+								<p>
+									Importar un fichero del usuario <i>profesor</i> en el usuario <i>alumno</i>: 
+									<br>
+									<code>
+										impdp system/alumno schemas=alumno remap_schema=profesor:alumno directory=EXPORTDIR dumpfile=profesor.dmp logfile=profesor.log
+									</code> <hr>
+									<strong>
+										<blockquote>
+											Permiso para cambiar schema: <code>grant import full database to YOURUSER;</code>
+										</blockquote>
+									</strong> <hr>
+								</p>
+							<!-- Ejercicios -->
+								<h2 id="ejercicios">Ejercicios</h2>
+								<h3>Primero</h3>
+								<p>
+									- Cargar <i>multas.sql</i>  <br>
+									- Exportar la BD al fichero /datos/export/multas.dmp  <br>
+									- Importar las tablas en el usuario <i>copiamultas</i>
+								</p>
+								<h3>Segundo</h3>
+								<p>
+									- Crear usuario CARRERAS y ejecutar el script siguiente <br>
+									- Cargar los datos <i>coches.sql</i> <br>
+									- Exportar las tablas del usuario CARRERAS al fichero CARRERAS.dmp <br>
+									- Borrar las filas de la tabla CARRERAS.RESULTADOS <br>
+									- Importar los datos desde carreras.dmp 
+								</p>
+							<!-- Otras soluciones-->
+								<h2 id="otrassoluciones">Otras soluciones</h2>
+								<p>
+									<ul>
+										<li>
+											RMAN
+										</li>
+										<li>
+											Copia de tablespaces
+										</li>
+									</ul>
 								</p>
 							</article>
 						<!-- About -->
