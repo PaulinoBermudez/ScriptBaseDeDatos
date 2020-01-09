@@ -30,19 +30,18 @@
 						</div>
 						<nav>
 							<ul>
-								<li><a href="#intro">Intro</a></li>
+								<li><a href="#intro">Introducción</a></li>
 								<li><a href="#work">Arquitectura </a></li>
 								<li><a href="#usuariosyprivilegios"> Usuarios y privile</a></li>
-								<li><a href="#about">Acerca de mi</a></li>
-								<li><a href="#contact">Contacto</a></li>
+								<li><a href="#concurrencia">Concurrencia y Bloques Oracle</a></li>
 								<!--<li><a href="#elements">Elements</a></li>-->
 							</ul>
 							<ul>
-								<li><a href="#concurrencia">Concurrencia y Bloques Oracle</a></li>
-								<li><pre>	</pre></li>
-								<li><pre>	</pre></li>
-								<li><pre>	</pre></li>
-								<li><a href="#exportarEimportar">Exportar e importar Datos en Oracle</a></li>
+								
+								<li><a href="#exportarEimportar">Exportar e importar</a></li>
+								<li><a href="#scripts">Scripts de administración de Oracle</a></li>
+								<li><a href="#about">Acerca de mi</a></li>
+								<li><a href="#contact">Contacto</a></li>
 							</ul>
 						</nav>
 					</header>
@@ -1552,6 +1551,59 @@ alter system kill session 'sid, serial#';
 											<li>El spid del proceso intermedio entre el cliente (application code) y el servidor (system global area)</li>
 											<li>Por tanto, el proceso a matar se encuentra en el mismo host que el servidor de base de datos.</li>
 										</ul>
+									</p>
+								</p>
+							</article>
+							<article id="exportarEimportar">
+								<h2>Exportar e importar</h2>
+								<p>
+									<ul>
+										<li><a href="#exportacion">Exportación de datos</a></li>
+										<li><a href="#importacion">Importación de datos</a></li>
+										<li><a href="#Ejercicios"></a></li>
+									</ul>
+								</p>
+								<h2 id="exportacion">Exportación</h2>
+								<p>
+									Se usa el comando <code>expdp</code> <br>
+									Para obtener ayuda del comando use: <code>expdp help=yes</code>. <hr>
+									Es necesario crear antes el directory de <strong>Oracle</strong>.
+									Ejemplo de exportación:
+									<p>
+									<code>
+										expdp scott/tiger DIRECTORY=dirdmp DUMPFILE=scott.dmp SCHEMAS=scott LOGFILE=scott.log
+									</code>
+									</p>
+									Valores válidos para la exportación:
+									<blockquote>
+											directory <br>
+											dumpfile <br>
+											include <i>=TABLE_DATA</i>  -- <strong>example</strong> <br>
+											logfile <br>
+											query <i>=employees:"WHERE department_id &gt; 10"</i> -- <strong>example</strong><br>
+											remap_data <i>=EMPORIO.market:BOSS.market</i> <br>
+											schemas <br>
+											tables <i>=HR.EMPLOYEES, SH.SALES:SALES_2019</i><br>
+											tablespace <br>
+									</blockquote>
+								</p>
+								<!-- Directory  de Oracle -->
+								<h3>directory de Oracle</h3>
+								<p>
+									Algunos comandos de <b>Oracle</b> necesitan trabajar sobre directorios del disco, a veces, no interesa que los usuarios conozcan/decidan los directorios para:
+									<ul>
+										<li>no llenar una partición</li>
+										<li>no divulgar información de la base de datos</li>
+										<li>no acceder a directorios donde <b>Oracle</b> puede, pero el usuario no</li>
+									</ul>
+									<h4>Definir un directorio</h4>
+									<p>
+										<code>
+											grant create any directory to EL_USUARIO;
+										</code>
+										<code>
+											create directory 
+										</code>
 									</p>
 								</p>
 							</article>
