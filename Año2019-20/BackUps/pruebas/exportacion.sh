@@ -5,40 +5,54 @@ clear
 mkdir Omen
 # Carpeta donde se exporta
 mkdir Pauchino
-
+echo "TABLESPACE."
+echo "Tablespace de pauchino --> exportacion"
+echo "Tablespace de omen --> exportacion"
+echo ""
+echo "USUARIOS."
+echo "Usuario primero con los datos a exportar -- Omen"
+echo "Usuario segundo con los datos a importar -- Pauchino"
+echo ""
 # Exportaciones
 sqlplus / as sysdba<<EOF
 
-host echo "Tablespace de pauchino --> exportacion"
-drop tablespace exportacion;
-
-create tablespace exportacion
+host echo " ==========================> Creación de tablespace EXPORTACIÓN ==> ruta: ~/pruebas/Pauchino/"
+host echo " =================================================================> ruta: ~/pruebas/Omen/"
+host echo ""
+host echo ""
+drop tablespace exportacionOmen;
+create tablespace exportacionOmen
+datafile '/home/alumno/Documents/ScriptBaseDeDatos/BackUps/pruebas/Omen/omen.dbf'
+size 50M;
+drop tablespace exportacionPau;
+create tablespace exportacionPau
 datafile '/home/alumno/Documents/ScriptBaseDeDatos/BackUps/pruebas/Pauchino/pau.dbf'
 size 50M;
 
-host echo " Usuario pruebas"
-drop user pruebas cascade;
-create user pruebas identified by pruebas 
+host echo " ==========================> Usuario pruebas -- Omen."
+drop user omen cascade;
+create user omen identified by omen
+default tablespace exportacionPau
+quota unlimited on exportacionPau;
+host echo " ==========================> Usuario pruebas -- Pauchino."
+drop user pauchino cascade;
+create user pauchino identified by pauchino 
 default tablespace exportacion 
 quota unlimited on exportacion;
 
-drop user pruebas2 cascade;
-create user pruebas2 identified by pruebas2 
-default tablespace USERS 
-quota unlimited on USERS;
+host echo " ==========================> Permisos de connect y resource para los usuarios."
+grant connect, resource to pauchino;
+grant create any directory to pauchino;
+grant connect, resource to omen;
+grant create any directory to omen;
 
-host echo "Permisos"
-grant connect, resource to pruebas;
-grant create any directory to pruebas;
-
-grant connect, resource to pruebas2;
-grant create any directory to pruebas2;
-
-
-host echo "Creando directorio de EXPORTACIONES para PAUCHINO"
+host echo " ==========================> Creando directorio de EXPORTACIONES para PAUCHINO"
 create directory EXPORTACIONES as '/home/alumno/Documents/ScriptBaseDeDatos/BackUps/pruebas/Pauchino';
-grant read,write on directory EXPORTACIONES to pruebas;
-grant exp_full_database to pruebas;
+
+grant read,write on directory EXPORTACIONES to omen;
+grant exp_full_database to omen;
+grant read,write on directory EXPORTACIONES to pauchino;
+grant exp_full_database to pauchino;
 EOF
 
 
