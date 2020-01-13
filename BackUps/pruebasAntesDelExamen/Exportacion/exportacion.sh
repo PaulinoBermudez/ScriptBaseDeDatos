@@ -28,13 +28,13 @@ grant connect, resource to PREEXAMEN;
 grant create any directory to PREEXAMEN;
 grant exp_full_database to PREEXAMEN;
 grant imp_full_database to PREEXAMEN;
-# - Creación del directorio en el sistema operativo donde se almacenarán los datos exportados: MIDIR
-create directory MIDIR as '/mispruebas/datos';
-grant read,write on directory MIDIR to PREEXAMEN;
+# - Creación del directorio en el sistema operativo donde se almacenarán los datos exportados: DIRECTORIOLOCAL
+create directory DIRECTORIOLOCAL as '/mispruebas/datos';
+grant read,write on directory DIRECTORIOLOCAL to PREEXAMEN;
 # - Carga de datos de prueba en un usario llamado PREEXAMEN 
 sqlplus PREEXAMEN/PREEXAMEN@192.168.43.100/asir @/home/alumno/Documents/ScriptBaseDeDatos/BackUps/pruebasAntesDelExamen/Exportacion/*.sql
 # - Exportación de los datos del usuario local (PREEXAMEN) en el directorio creado
-expdp PREEXAMEN/PREEXAMEN@192.168.43.100/asir directory=MIDIR schemas=PREEXAMEN dumpfile=PREEXAMEN.dmp logfile=PREEXAMEN.log
+expdp PREEXAMEN/PREEXAMEN@192.168.43.100/asir directory=DIRECTORIOLOCAL schemas=PREEXAMEN dumpfile=PREEXAMEN.dmp logfile=PREEXAMEN.log
 # 
 # Una vez creada la exportación de los datos del usuario local. Se copian los archivos en otro usuario remoto
 # cuyo nombre e IP con:
@@ -50,15 +50,27 @@ scp /mispruebas/datos/PREEXAMEN.* alumno@192.168.43.202:/home/alumno/USUARIOREMO
 # - Cargamos los datos en la maquina virtual remota con direccion IP 192.168.43.202
 create directory DIRECTORIOREMOTO as '/remoto/datos';
 grant read,write on directory DIRECTORIOREMOTO to PREEXAMENREMOTO;
-expdp PREEXAMENREMOTO/PREEXAMENREMOTO@192.168.43.202/asir directory=DIRECTORIOREMOTO 
-# -  El suario de la maquina remota de ORACLE ES: PREEXAMENREMOTO/PREEXAMENREMOTO
+grant exp_full_database to PREEXAMENREMOTO;
+grant imp_full_database to PREEXAMENREMOTO;
+expdp PREEXAMENREMOTO/PREEXAMENREMOTO@192.168.43.202/asir directory=DIRECTORIOREMOTO schemas=PREEXAMENREMOTO dumpfile=PREEXAMENREMOTO.dmp logfile=PREEXAMENREMOTO.log 
+# - El suario de la maquina remota de ORACLE ES: PREEXAMENREMOTO/PREEXAMENREMOTO
 # - El uusario local PREEXAMEN con dirección IP 192.168.43.100 borrará los datos locales. Quedándose sin información alguna de sus datos
+sqlplus PREEXAMEN/PREEXAMEN@192.168.43.100/asir<<EOF
+select * from dba_tables;
+drop table any;
+EOF
 # - Una vez borrados los datos en la maquina local, hacemos una importación de los datos del usuario PREEXAMENREMOTO remapeando los datos para el 
 # usuario PREEXAMEN de la maquina local con IP 192.168.43.100
+impdp PREEXAMENREMOTO/PREEXAMENREMOTO@192.168.43.202/asir directory=DIRECTORIOREMOTO dumpfile=PREEXAMENREMOTO.dmp logfile=PREEXAMENREMOTO.log remap_schemas=PREEXAMENREMOTO:PREEXAMEN
 # - Tras la importacion de los datos, borramos una de las tablas cargadas tras la importacion.
+sqlplus PREEXAMENREMOTO/PREEXAMENREMOTO@192.168.43.202/asir<<EOF
+drop table CARRERAS;
+EOF
 # - Realizamos con el usuario remoto una nueva exportacion y carga de los datos. Con esto debemos obtener los mismos datos que el usuario con la IP 192.168.43.100
 # es decir, con una tabla menos.
-#
+expdp PREEXAMEN/PREEXAMEN@192.168.43.100/asir directory=PREEXAMEN.dmp logfile=PREEXAMEN.log schemas=PREEXAMEN
+impdp PREEXAMENREMOTO/PREEXAMENREMOTO@192.168.43.202/asir directory=PREEXAMENREMOTO.dmp logfile=PREEXAMENREMOTO.log schemas=PREEXAMENREMOTO
+scp /remoto/datos/PREEXAMENREMOTO.* PREEXAMEN/PREEXAMEN@192.168.43.100:/mispruebas
 #
 # Fin de pruebas de importacion y exportacion de datos en ORACLE 18C 
 #
