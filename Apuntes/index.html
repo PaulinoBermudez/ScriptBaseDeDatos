@@ -1883,6 +1883,65 @@ else
 	echo grep no lo ha encontrado, o ha habido errores
 fi</code></pre>
 									</p>
+									<!-- return en funciones -->
+									<h3>return en funciones</h3>
+									<p>
+										Las funciones también tienen código de retorno. Pueden simplificar <code>if</code> o bucles <code>while</code>. 
+										<pre><code>condicion(){ 
+# Aquí se podría decidir el retorno con otros comandos 
+# o con if's encadenados, pero como ejemplo devolvemos TRUE.
+<strong>return 0</strong>
+}
+
+while condicion 
+do 
+	echo Esto es un bucle infinito 
+done</code></pre>
+									</p>
+									<!-- Comando [ -->
+									<h3>Comando [</h3>
+									<p>
+										[ es un comando externo que ayuda a hacer condiciones con <code>if</code> 
+										<ul>
+											<li>Comparación de cadenas</li>
+											<li>Comparación de números</li>
+											<li>Existencia de ficheros</li>
+										</ul>
+										<pre><code>TEST(1)
+TEST(1) 
+NAME 
+	test -  check file types and compare values 
+SYNOPSIS 
+	test EXPRESSION 
+	test 
+	[ EXPRESSION ] 
+	[ ]
+	[ OPTION ] </code></pre>
+									</p>
+									<!-- Operaciones aritméticas -->
+									<h3>Operaciones aritméticas</h3>
+									<p>
+										Se usa $((expresión))
+										<pre><code> # Incrementar la variable contador
+contador = $(($contador + 1)) </code></pre>
+									</p>
+									<!-- Comandos útiles -->
+									<h3>Enviar un email</h3>
+									<p>
+										<code>
+											echo CUERPO DEL MENSAJE | mail -s "Asunto del mensaje" -a FICHERO_ADJUNTO maildechunche@gmail.com
+										</code>
+									</p>
+									<!-- Operaciones matemáticas, si no se dispone de bash -->
+									<h3>Operaciones matemáticas, si no se dispone de bash</h3>
+									<p>
+										<code>echo 2+2 | bc</code>
+									</p>
+									<!-- Text User Interface -->
+									<h3>Text User Interface</h3>
+									<p>
+										whiptail o dialog
+									</p>
 								</p>
 							</article>
 						<!-- About -->
