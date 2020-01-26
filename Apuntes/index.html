@@ -1713,6 +1713,7 @@ alter system kill session 'sid, serial#';
 								<!-- Scripts de shell -->
 								<h2>Scripts de shell</h2>
 								<p>
+									<!-- shebang -->
 									<h3>Shebang</h3>
 									<p>
 										Los scripts empiezan con una línea indicando el intérprete que los ejecutará, con un comentario <strong>#!</strong>
@@ -1726,6 +1727,7 @@ alter system kill session 'sid, serial#';
 											#!/bin/python
 										</code></p>
 									</p>
+									<!-- variables -->
 									<h3>Variables</h3>
 									<p>
 										<blockquote>
@@ -1748,6 +1750,138 @@ alter system kill session 'sid, serial#';
 													variable-para-un-comando=valor <b>comando</b>
 												</code>
 										</blockquote>
+									</p>
+									<!-- Entrada/salida -->
+									<h3>Entrada/salida</h3>
+									<p>
+										Los programadas comienzan su ejecución con una salida y una entrada, son flujos de bytes, inicialmente:
+										<ul>
+											<li>La entrada es el teclado</li>
+											<li>La salida es la consola</li>
+										</ul>
+									</p>
+									<!-- Redirigir la entrada/salida a fichero -->
+									<h3>Redirigir entrada/salida a fichero</h3>
+									<p>
+										<blockquote>
+											<i>
+												# La entrada sale de un fichero en vez del teclado
+											</i> <br>
+											<code>
+												sort &lt; fichero
+											</code> <br>
+											<i>
+												# La entrada sale de un fichero y la salida va a otro fichero 
+											</i> <br>
+											<code>
+												sort &lt; fichero &gt; fichero_ordenado
+											</code> <br>
+											<i>
+												# La entrada sale de un fichero y la salida se agrega al final de un fichero 
+											</i> <br>
+											<code>
+												sort &lt; otro_fichero &gt;&gt; fichero_ordenado 
+											</code> <br>
+											<i>
+												# La salida del primer comando es la entrada del segundo 
+											</i> <br>
+											<code>
+												sort &lt; fichero <strong>| less</strong>
+											</code>
+										</blockquote>
+									</p>
+									<!-- Heredocs -->
+									<h3>Heredocs</h3>
+									<p>
+										<pre><code><i># Entrada se especifica en el propio script</i>
+sort &lt;&lt; FINDEFICHERO
+Maria
+Pepe
+Juan
+Susana
+Manolo 
+FINDEFICHERO</code></pre>
+									</p>
+									<!-- Salida como parámetro -->
+									<h3>Salida como parámetro</h3>
+									<p>
+										Se puede capturar la salida de un comando en una cadena, esa cadena se usa luego como otra cualquiera en el script. <br>
+										<code>
+											# defino una variable con los ficheros del directorio <br>
+											variable=$(ls)
+										</code>
+									</p>
+									<!-- Parámetros del script -->
+									<h3>Parámetros del script</h3>
+									<p>
+										<ul>
+											<lo>
+												<i>$0:</i> El nombre del script.
+											</lo>
+											<lo>
+												<i>$1:</i> Primer parámetro.
+											</lo>
+											<lo>
+												<i>$2:</i> Segundo parámetro.
+											</lo>
+											<lo>
+												<i>$*:</i> Todos los parámetros a partir del primero.
+											</lo>
+										</ul>
+									</p>
+									<!-- Funciones -->
+									<h3>Funciones</h3>
+									<p>
+										Son conjuntos agrupados de órdenes con un nombre. Tienen sus propios argumentos: $*, $1, $2, ... <br>
+										<pre><code>importante(){
+echo ---------
+echo Aviso: $*
+echo ---------
+}
+
+importante "Así se define una función en bash"</code></pre>
+									</p>
+									<!-- Código de error (exit code) -->
+									<h3>Código de error (exit code)</h3>
+									<p>
+										Al terminar, un programa devuelve un valor numérico, por convenio:
+										<ul>
+											<li>0: Todo ha funcionado correctamente.</li>
+											<li>Distinto de 0: Ha sucedido algún tipo de error.</li>
+										</ul>
+										Se puede consultar con <code>$?</code> <strong>inmediatamente</strong> después de ejecutar el comando. <br>
+										<pre><code> grep cadena * 
+exit_code_del_grep=$? 
+echo grep a devuelto: $exit_code_del_grep</code></pre>
+									</p>
+									<!-- Bucles -->
+									<h3>Bucles</h3>
+									<p>
+										Con <i>for</i> se pueden hacer bucles sobre una lista de parámetros, para bucles numéricos se puede usar el comando <code>seq</code>. 
+										<pre><code>for nombre in maria juan pepe susana manolo 
+do 
+  echo Realizando una vuelta de bucle sobre $nombre 
+done 
+<i># Cuidado con los nombres de fichero con espacio </i>
+for fichero in $(ls) 
+do 
+  echo El siguiente fichero es $fichero 
+done</code></pre>
+									</p>
+									<!-- Condiciones -->
+									<h3>Condiciones</h3>
+									<p>
+										<code>if</code> utiliza los códigos de error de los programas.
+										<ul>
+											<li>0 se considera <i>true</i></li>
+											<li>Cualquier otro valor se considera <i>false</i></li>
+										</ul>
+										<pre><code> if grep cadena * 
+then 
+	echo grep ha encontrado algo sin errores 
+else 
+	echo grep no lo ha encontrado, o ha habido errores
+fi</code></pre>
 									</p>
 								</p>
 							</article>
