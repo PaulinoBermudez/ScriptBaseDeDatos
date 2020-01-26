@@ -1691,7 +1691,7 @@ alter system kill session 'sid, serial#';
 										<li><a href="#introScripts">Introducción</a></li>
 										<li><a href="#shell">Scripts de shell</a></li>
 										<li><a href="#entorno">Entorno inicial</a></li>
-										<li><a href="#prerequisitos">Prerrequisitos</a></li>
+										<li><a href="#prerrequisitos">Prerrequisitos</a></li>
 										<li><a href="sql">Ejecución de SQL desde la shell</a></li>
 										<li><a href="#arranqueparada">Arranque y parada</a></li>
 										<li><a href="#operaciones">Operaciones periódicas</a></li>
@@ -1947,12 +1947,12 @@ contador = $(($contador + 1)) </code></pre>
 								<p>
 									bash procesa los siguientes ficheros: 
 									<ul>
-										<lo>
+										<ol>
 											Si un nuevo <i>login:</i> /etc/bash.bashre (Debian), /etc/bashrc (Centos), ~/.bash_login
-										</lo>
-										<lo>
+										</ol>
+										<ol>
 											Siempre: /etc/profile ~/.bashrc
-										</lo>
+										</ol>
 									</ul>
 									Así, se puede conseguir que:
 									<ul>
@@ -1961,7 +1961,26 @@ contador = $(($contador + 1)) </code></pre>
 										<li>Se ejecuten comandos para todos los usuarios</li>
 									</ul>
 									<!-- Ejercicios -->
-									
+									<h3>Ejercicios</h3>
+									<ul>
+										<ol>1. Haz que el usuario 'alumno' tenga las variables necesarias para usar ORACLE cada vez que hace login.</ol>
+										<ol>2. Haz que el usuario 'alumno' vea el estado del listener cada vez que inicia una shell.</ol>
+										<ol>3. Haz que todos los usuarios vean el mensaje 'Bienvenido a ASGBD' cada vez que inician una shell.</ol>
+										<ol>4. Crea un script en $HOME/estado.sh que muestre el valor de las variables HOME, USER, PATH. ORACLE_HOME, ORABLE_SID, ORACLE_BASE y la hora actual.</ol>
+									</ul>
+								</p>
+								<!-- Prerrequisitos -->
+								<h2 id="prerrequisitos">Prerrequisitos</h2>
+								<p>
+									Los comandos de <strong>Oracle</strong> necesitan conocer a qué instancia hacen referencia, para ello, necesitan las variables de entorno ORACLE_HOME y ORABLE_SID, también, es conveniente añadir los 
+									comandos de <strong>Oracle</strong> al path. El siguiente script puede usarse para tener estas variables (ejecutándolo con <code><strong>source</strong></code> )
+									<pre><code>#!/bin/sh 
+ORACLE_HOME=/var/oracle/product/18.1.0/asir_bbdd
+ORACLE_SID=asir
+PATH=$ORACLE_HOME/bin:$PATH
+export ORACLE_HOME
+export ORACLE_SID
+export PATH	</code></pre>
 								</p>
 							</article>
 						<!-- About -->
