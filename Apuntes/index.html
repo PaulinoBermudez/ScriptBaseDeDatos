@@ -1684,8 +1684,72 @@ alter system kill session 'sid, serial#';
 									</ul>
 								</p>
 							</article>
-							<article>
-								
+							<article id="scripts" >
+								<h2>Scripts de shell para Oracle.</h2>
+								<p>
+									<ul>
+										<li><a href="#introScripts">Introducción</a></li>
+										<li><a href="#shell">Scripts de shell</a></li>
+										<li><a href="#entorno">Entorno inicial</a></li>
+										<li><a href="#prerequisitos">Prerrequisitos</a></li>
+										<li><a href="sql">Ejecución de SQL desde la shell</a></li>
+										<li><a href="#arranqueparada">Arranque y parada</a></li>
+										<li><a href="#operaciones">Operaciones periódicas</a></li>
+									</ul>
+								</p>
+								<!-- Introducción a Scripts en Oracle con la shell en Centos 7 -->
+								<h2 id="introScripts">Introducción</h2>
+								<p>
+									Muchas de las tareas del mantenimiento de una base de datos <strong>Oracle</strong> se llevan a cabo desde la línea de comandos.
+									Por lo tanto, pueden automatizarse:
+									<ul>
+										<li>Arranque y parada</li>
+										<li>Extracciones</li>
+										<li>Copia de seguridad de datos</li>
+										<li>Restauración de datos</li>
+									</ul>
+									Para ello, se usan las facilidades de ejecución del sistema operativo aprendidas en otros módulos.
+								</p>
+								<!-- Scripts de shell -->
+								<h2>Scripts de shell</h2>
+								<p>
+									<h3>Shebang</h3>
+									<p>
+										Los scripts empiezan con una línea indicando el intérprete que los ejecutará, con un comentario <strong>#!</strong>
+										<p><code>
+											#!/bin/sh
+										</code></p>
+										<p><code>
+											#!/bin/php
+										</code></p>
+										<p><code>
+											#!/bin/python
+										</code></p>
+									</p>
+									<h3>Variables</h3>
+									<p>
+										<blockquote>
+											<i>
+												# Variable local a esta shell
+											</i> <br>
+												<code>
+													variable=valor <br>
+												</code>
+											<i>
+												# Variable exportada a los hijos de esta shell 
+											</i> <br>
+												<code>
+													<b>export</b> variable_exportada=valor <br>
+												</code>
+											<i>
+												# Variable definida solo para un comando 
+											</i> <br>
+												<code>
+													variable-para-un-comando=valor <b>comando</b>
+												</code>
+										</blockquote>
+									</p>
+								</p>
 							</article>
 						<!-- About -->
 							<article id="about">
@@ -1729,7 +1793,6 @@ alter system kill session 'sid, serial#';
 									<li><a href="https://github.com/chunche95" target="_blank"  class="icon fa-github"><span class="label">GitHub</span></a></li>
 								</ul>
 							</article>
-
 						<!-- Elements 
 							<article id="elements">
 								<h2 class="major">Elements</h2>
@@ -1972,6 +2035,7 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 
 							</article>
 							-->
+						
 					</div>
 
 				<!-- Footer -->
