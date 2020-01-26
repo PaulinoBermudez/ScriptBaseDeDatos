@@ -1989,7 +1989,11 @@ export PATH	</code></pre>
 											<li>Mediante Oracle: usuarios creados con <code>create user ...</code></li>
 											<li>Mediante el sistema operativo: Al instalar, se indica un grupo de usuarios que Oracle considera autenticados (Grupo wheel)</li>
 										</ul>
-										
+										SQLPlus con autenticación de sistema operativo.
+										<pre><code>show parameter os_authent_prefix; -- Por defecto es 'ops$'
+create user ops$usuario identified externally;
+#+end_src_ 
+ </code></pre>
 									</p>
 								</p>
 							</article>
