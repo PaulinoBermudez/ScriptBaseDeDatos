@@ -1711,7 +1711,7 @@ alter system kill session 'sid, serial#';
 									Para ello, se usan las facilidades de ejecución del sistema operativo aprendidas en otros módulos.
 								</p>
 								<!-- Scripts de shell -->
-								<h2>Scripts de shell</h2>
+								<h2 id="shell">Scripts de shell</h2>
 								<p>
 									<!-- shebang -->
 									<h3>Shebang</h3>
@@ -1942,6 +1942,26 @@ contador = $(($contador + 1)) </code></pre>
 									<p>
 										whiptail o dialog
 									</p>
+								</p>
+								<h2 id="entorno">Entorno inicial</h2>
+								<p>
+									bash procesa los siguientes ficheros: 
+									<ul>
+										<lo>
+											Si un nuevo <i>login:</i> /etc/bash.bashre (Debian), /etc/bashrc (Centos), ~/.bash_login
+										</lo>
+										<lo>
+											Siempre: /etc/profile ~/.bashrc
+										</lo>
+									</ul>
+									Así, se puede conseguir que:
+									<ul>
+										<li>Se ejecuten comandos al entrar a un sistema</li>
+										<li>Se ejecuten comandos en cadena nueva shell</li>
+										<li>Se ejecuten comandos para todos los usuarios</li>
+									</ul>
+									<!-- Ejercicios -->
+									
 								</p>
 							</article>
 						<!-- About -->
