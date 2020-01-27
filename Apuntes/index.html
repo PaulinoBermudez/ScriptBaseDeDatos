@@ -1993,7 +1993,47 @@ export PATH	</code></pre>
 										<pre><code>show parameter os_authent_prefix; -- Por defecto es 'ops$'
 create user ops$usuario identified externally;
 #+end_src_ 
+
+#+begin_src sh 
+su usuario 
+sqlpñus / 
  </code></pre>
+									</p>
+									<!-- SQLPlus con autenticación de Oracle -->
+									<h3>SQLPlus con autenticación de Oracle</h3>
+									<p>
+										<code>
+											sqlplus sys/alumno as sysdba
+										</code>
+									</p>
+									<!-- Conexiones de SQLPlus -->
+									<h3>Conexiones de SQLPlus</h3>
+									<p>
+										Hasta ahora: 
+										<ul>
+											<li>todas las conexiones de SQLPlus son locales, sin utilizar la red</li>
+											<li>todas las conexiones de SQLDeveloper son por red</li>
+										</ul>
+										Para conectar por red con SQLPlus se usa un descriptor de conexión
+										<ul>
+											<li>Los descriptores están en el fichero <i>tnsnames.ora</i></li>
+										</ul>
+										<code>
+											sqlplus sys/alumno@CONEXION as sysdba
+										</code>
+									</p>
+									<!-- tnsnames.ora -->
+									<h3>tnsnames.ora</h3>
+									<p>
+<pre>MYSID- 
+  (DESCRIPTION -
+	(ADDRESS_LIST - 
+	  (ADDRESS - (PROTOCOL-TCP) (HOST-mydnshostname) (PORT-1521))
+	)
+	(CONNECT_DATA - 
+		(SERVICE_NAME - MYSID)
+	)
+  )</pre>
 									</p>
 								</p>
 							</article>
