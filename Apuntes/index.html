@@ -2291,7 +2291,46 @@ WantedBy=multi-user.target</code></pre>
 												</td>
 											</tr>
 										</table>
-										<i>Fuente:</i> <a href="https://www.freedesktop.org/software/systemd/man/systemd.unit.html" target="_blank" rel="noopener noreferrer">freedesktop</a>
+										<i>Fuente:</i> <a href="https://www.freedesktop.org/software/systemd/man/systemd.unit.html" target="_blank" rel="noopener noreferrer">freedesktop</a> <br>
+										[*] Si B se apaga examplícitamente, se apaga A. Si el servicio B termina sin error, no se apaga A.
+										
+										<!-- Dependencias de la sección Install -->
+										<h4>Dependencias de la sección Install</h4>
+										<p>
+											Si el servicio A 
+											<table>
+												<tr>
+													<td>WantedBy=B</td>
+													<td>Equivalente a que B indique Wants=A</td>
+												</tr>
+												<tr>
+													<td>RequiredBy=B</td>
+													<td>Equivalente a que B indique Required=A</td>
+												</tr>
+											</table>
+										</p>
+										<!-- Controlar el arranque de servicios -->
+										<h4>Controlar el arranque de servicios</h4>
+										<p>
+											Habilitar/deshabilitar un servicio al inicio del sistema. 
+											<code>
+												systemctl enable SERVICIO 
+											</code>
+											<code>
+												systemctl disable SERVICIO
+											</code>
+										</p>
+										<!-- Arrancar o parar un servicio -->
+										<h4>Arrancar o parar un servicio</h4>
+										<p>
+											<code>systemctl start SERVICIO</code>
+											<code>systemctl stop SERVICIO</code>
+										</p>
+										<!-- Recargar ficheros -->
+										<h4>Recargar ficheros</h4>
+										<p>
+											Si se crean nuevas unidades, no se tienen en cuenta automáticamente, se necesita <code>systemctl daemon reload</code>
+										</p>
 									</p>
 								</p>
 							</article>
