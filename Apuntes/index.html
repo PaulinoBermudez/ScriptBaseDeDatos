@@ -2117,6 +2117,15 @@ set pagesize 0  -- sin cabecera de las filas
 set trimspool on -- Elimina los espacios en blancos 
 set headsep off --  Quizas no sea muy útil 
 set linesize 1000 -- X should be the sum of the colum withs
+
+spool tablas.csv 
+
+select table_name, tablespace_name 
+  from all_tables
+  where owner = 'SYS'
+	and tablespace_name is not null;
+spool off
+HEREDOC   
 </code></pre>										
 									</p>
 								</p>
