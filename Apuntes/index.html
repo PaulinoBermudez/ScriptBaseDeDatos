@@ -1692,7 +1692,7 @@ alter system kill session 'sid, serial#';
 										<li><a href="#shell">Scripts de shell</a></li>
 										<li><a href="#entorno">Entorno inicial</a></li>
 										<li><a href="#prerrequisitos">Prerrequisitos</a></li>
-										<li><a href="sql">Ejecución de SQL desde la shell</a></li>
+										<li><a href="#sql">Ejecución de SQL desde la shell</a></li>
 										<li><a href="#arranqueparada">Arranque y parada</a></li>
 										<li><a href="#operaciones">Operaciones periódicas</a></li>
 									</ul>
@@ -2034,7 +2034,28 @@ sqlpñus /
 		(SERVICE_NAME - MYSID)
 	)
   )</pre>
+										Situado en $ORACLE_HOME/network/admin/ <br>
+										Indica las formas de conexión a instancias de base de datos 
+										<ul>
+											<li>Protocolo de conexión: TCP</li>
+											<li>Dirección IP</li>
+											<li>Puerto</li>
+											<li>SID</li>
+										</ul>
+										Equivalen a la lista de conexiones de SQLDeveloper
 									</p>
+									<!-- Conexiones sin tnsnames.ora -->
+									<h3>Conexiones sin tnsnames.ora</h3>
+									<p>
+										No es necesario cambiar el fichero <i>tnsnames.ora</i> para conectarse a un servirdor remoto, aunque puede ser recomendable. Ejemplo: varios scripts usan un nombre de conexión, 
+										de forma que pueda cambiarse fácilmente. <br>
+										<code>sqlplus username/password@host:port/sid</code>
+									</p>
+								</p>
+								<!-- Ejecución de SQL desde la shell -->
+								<h2 id="sql">Ejecucuón de SQL desde la shell</h2>
+								<p>
+
 								</p>
 							</article>
 						<!-- About -->
