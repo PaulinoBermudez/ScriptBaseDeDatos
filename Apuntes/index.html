@@ -2113,10 +2113,10 @@ less prueba.txt</code></pre>
 										Tiene algunas facilidades para formatear la salida (por ejemplo, para generar ficheros CSV).
 <pre><code>sqlplus -S sys/alumno as sysdba &lt;&lt;HEREDOC 
 set solsep ','  -- sapara solumnas con una coma 
-set pagesize 0  -- sin cabecera de las filas
+set pagesize 0  -- sin repetición de las cabeceras de las filas
 set trimspool on -- Elimina los espacios en blancos 
 set headsep off --  Quizas no sea muy útil 
-set linesize 1000 -- X should be the sum of the colum withs
+set linesize 1000 -- Ancho de la página
 
 spool tablas.csv 
 
@@ -2139,9 +2139,160 @@ HEREDOC
 									</p>
 								</p>
 								<!-- Arranque y parada -->
-								<h2>Arranque y parada</h2>
+								<h2 id="arranqueparada">Arranque y parada</h2>
 								<p>
-									
+									<!-- dbstart y /etc/oratab -->
+									<h3>dbstart y /etc/oratab</h3>
+									<p>
+										<strong>Oracle</strong> proporciona el script dbstart para arrancar instancias de base de datos, se guía por el comando de /etc/oratab
+										Por alguna razón, 
+										<ul>
+											<li>no levanta el listener </li>
+											<li>no hace <code>startup open</code>, así que no se registra en el listener</li>
+											<li>se puede modificar el script para que lo haga</li>
+										</ul>
+										<blockquote>
+											<code>
+												asir:/var/oracle/product/18.0.1/asir_bbdd: <strong>Y</strong>
+											</code>
+										</blockquote>
+									</p>
+									<!-- Ejecutar Oracle al iniciar el sistema -->
+									<h3>Ejecutar Oracle al iniciar el sistema</h3>
+									<p>
+										Cada sistema operativo tiene sus formas de arrancar servicios/demonios al inicio 
+										<ul>
+											<li>
+												<strong>Windows</strong> Servicios
+											</li>
+											<li>
+												<strong>Linux</strong>
+												<ul>
+													<li>
+														<b>systemd:</b> Ficheros en el directorio /etc/systemd/system. Se controla con la orden <code>systemctl</code>
+													</li>
+													<li>
+														<b>rc init:</b> Se basaba en scripts en los directorios /etc/rc.*. Se está reemplazando por <b>systemd</b>
+													</li>
+												</ul>
+											</li>
+										</ul>
+									</p>
+									<!-- systemd -->
+									<h3>systemd</h3>
+									<p>
+										Los servicios se crean con ficheros en <code>/etc/systemd/system</code> (entre otros)
+										<ul>
+											<li>Dependen de otros ficheros (After)</li>
+											<li>Otros servicios dependen de ellos (WantedBy)</li>
+											<li>Se puede elegir el usuario que lo lanza (User)</li>
+										</ul>
+<pre><code>[Unit]
+Description=Oracle 
+After=network.target 
+
+[Service]
+Type=forking 
+User=alumno
+ExecStart=/home/alumno/oracleInit.sh
+ExecStop=/home/alumno/oracleStop.sh 
+
+[Install]
+WantedBy=multi-user.target</code></pre>	
+										Más información con <code>man systemd.service</code> y <code>man systemd.unit</code>
+									</p>
+									<!-- Dependencias de la sección Unit -->
+									<h3>Dependencias de la sección Unit</h3>
+									<p>
+										<table>
+											<tr>
+												<td>
+													Si el servicio A ...
+												</td>
+												<td>
+													A intenta arrancar B
+												</td>
+												<td>
+													Si se apaga B, A también
+												</td>
+												<td>
+													A arranca si B está inicialmente apagado
+												</td>
+												<td>
+													Si falla arranque de B, arranca A
+												</td>
+											</tr>
+											<tr>
+												<td>
+													BindsTo=B
+												</td>
+												<td>
+													Sí
+												</td>
+												<td>
+													Sí
+												</td>
+												<td>
+													Sí
+												</td>
+												<td>
+													No
+												</td>
+											</tr>
+											<tr>
+												<td>
+													Requires=B
+												</td>
+												<td>
+													Sí
+												</td>
+												<td>
+													No*
+												</td>
+												<td>
+													Sí
+												</td>
+												<td>
+													No
+												</td>
+											</tr>
+											<tr>
+												<td>
+													Requisite=B
+												</td>
+												<td>
+													No
+												</td>
+												<td>
+													No
+												</td>
+												<td>
+													No
+												</td>
+												<td>
+													No
+												</td>
+											</tr>
+											<tr>
+												<td>
+													Wants=B
+												</td>
+												<td>
+													Sí
+												</td>
+												<td>
+													No
+												</td>
+												<td>
+													Sí
+												</td>
+												<td>
+													Sí
+												</td>
+											</tr>
+										</table>
+										<i>Fuente:</i> <a href="https://www.freedesktop.org/software/systemd/man/systemd.unit.html" target="_blank" rel="noopener noreferrer">freedesktop</a>
+									</p>
 								</p>
 							</article>
 						<!-- About -->
