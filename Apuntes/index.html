@@ -2331,6 +2331,59 @@ WantedBy=multi-user.target</code></pre>
 										<p>
 											Si se crean nuevas unidades, no se tienen en cuenta automáticamente, se necesita <code>systemctl daemon reload</code>
 										</p>
+										<!-- Servicios de usuario -->
+										<h4>Servicios de usuario</h4>
+										<p>
+											El comando <code>systemctl</code> se ejecuta con el parámetro <code>system</code> por defecto <br>
+											<li>Servicios de sistema.</li>
+											Si se ejecuta con <code>user</code> se usan los servicios del usuario llamante
+											<li>Sus unidades están en $HOME/.config/systemd/user/</li>
+										</p>
+										<!-- Runlevels y targets -->
+										<h4>Runlevels y targets</h4>
+										<p>
+											<table>
+												<tr>
+													<td>Runlevel</td>
+													<td>Target</td>
+													<td>Alias</td>
+												</tr>
+												<tr>
+													<td>0</td>
+													<td>poweroff.target</td>
+													<td>runlevel0.target</td>
+												</tr>
+												<tr>
+													<td>1</td>
+													<td>rescue.target</td>
+													<td>runlevel1.target</td>
+												</tr>
+												<tr>
+													<td>3</td>
+													<td>multi user.target</td>
+													<td>runlevel3.target</td>
+												</tr>
+												<tr>
+													<td>5</td>
+													<td>graphical.target</td>
+													<td>runlevel5.target</td>
+												</tr>
+												<tr>
+													<td>6</td>
+													<td>reboot.target</td>
+													<td>runlevel6.target</td>
+												</tr>
+											</table>
+										</p>
+										<!-- Utilidades systemd -->
+										<h4>Utilidades systemd</h4>
+										<p>
+											<ul>
+												<li><code>systemd analyze plot:</code> Tiempo de carga de cada servicio</li>
+												<li><code>systemd analyze dot:</code> Fichero con todas las dependencias. Puede convertirse en SVG con dot Tsvg o nombre dibujo.svg </li>
+												<li><code>systemctl list dependencies:</code> Servicios necesarios para cargar un servicio. Se pueden listar a la inversa con <code>reverse</code></li>
+											</ul>
+										</p>
 									</p>
 								</p>
 							</article>
