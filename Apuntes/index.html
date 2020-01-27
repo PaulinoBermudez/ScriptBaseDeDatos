@@ -2386,6 +2386,76 @@ WantedBy=multi-user.target</code></pre>
 										</p>
 									</p>
 								</p>
+								<!-- Operaciones periódicas -->
+								<h2 id="operaciones">Operaciones periódicas</h2>
+								<p>
+									Los sistemas operativos aportan formas para ejecutar tareas periódicamente
+									<ul>
+										<li>Windows: tiene las tareas programadas</li>
+										<li>Linux: tiene el sistema cron y systemd</li>
+									</ul>
+									<!-- cron -->
+									<h3>cron</h3>
+									<p>
+										Es un servicio que: 
+										<ul>
+											<li>Lee el fichero /etc/crontab</li>
+											<li>Ejecuta las órdenes descritas en ese fichero</li>
+											<li>Más información en la <a href="https://es.wikipedia.org/wiki/Cron_(Unix)#Formato_del_fichero_crontab" target="_blank" rel="noopener noreferrer">Wikipedia</a></li>
+										</ul>
+										Suele utilizar el comando <code>run parts</code>
+										<ul>
+											<li>Este comando ejecuta todos los comandos de un directorio</li>
+											<li>Más info con <code>man run parts</code></li>
+										</ul>
+									</p>
+									<!-- systemd -->
+									<h3>systemd</h3>
+									<p>
+										Más información en <code>man systemd.timer</code> y <code>man systemd.time</code>
+<div>
+<pre><code>[Unit]
+Description=Print date into /tmp/date file 
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/sh -c '/usr/bin/date &gt;&gt; /tmp/date'</code></pre>	
+/etc/systemd/system/date.service
+</div>
+<div>
+<pre><code>[Unit]
+Description=Run date.service every 10 minutes 
+
+[Timer]
+OnCalendar=*:0/10
+</code></pre>
+/etc/systemd/system/date.timer
+</div>
+									</p>
+									<!-- Operaciones periódicas manuales -->
+									<h3>Operaciones periódicas manuales</h3>
+									<p>
+										Se puede crear un bucle infinito con sleep, el bucle se interrumpe con alguna condición externa, por ejemplo, que exista o deje de existir un fichero. 
+<pre><code>#!/bin/bash 
+em $HOME/bucledebeparar 
+continua(){
+	if [ -e $HOME/bucledebeparar ]
+	then 
+		return 1
+	else
+		retunr 0 
+	fi
+}
+SEGUNDOS=5
+sleep $SEGUNDOS
+white continua 
+do 
+	echo Han pasado $SEGUNDOS segundos 
+	sleep $SEGUNDOS
+done
+</code></pre>										
+									</p>
+								</p>
 							</article>
 						<!-- About -->
 							<article id="about">
