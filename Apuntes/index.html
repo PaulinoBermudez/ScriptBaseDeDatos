@@ -1926,6 +1926,29 @@ SYNOPSIS
 contador = $(($contador + 1)) </code></pre>
 									</p>
 									<!-- Comandos útiles -->
+									<h3>uniq - Comando para borrar repetidos</h3>
+									<p>
+										El comando <code>uniq</code> sirve para eliminar las repeticiones de una lista, ejemplo: 
+										<pre><code> uniq &lt;&lt; EOF
+hola
+hola
+adios 
+hola 
+EOF 
+</code></pre> 
+										Pero esto solo funciona si los string están juntos, para que funcione bien, debemos pararlo con un <code>sort</code>, ejemplo:
+										<pre><code>mi_uniq(){
+  sort | uniq 
+}
+mi_uniq &lt;&lt;EOF 
+hola 
+adios 
+hola 
+hola 
+chao 
+hola
+</code></pre>
+									</p>
 									<h3>Enviar un email</h3>
 									<p>
 										<code>
@@ -2055,7 +2078,27 @@ sqlpñus /
 								<!-- Ejecución de SQL desde la shell -->
 								<h2 id="sql">Ejecucuón de SQL desde la shell</h2>
 								<p>
-
+									El comando <code>sqlplus</code> puede ejecutarse desde la shell. Lee las órdenes SQL desde la entrada estándar. 
+									<!-- ejemplo de heredoc -->
+									<h3>Ejemplo <i>heredoc</i></h3>
+									<p>
+										<pre><code>
+sqlplus -S alumno/alumno &lt;&lt;HEREDOC
+set autocommit off
+create table prueba (un-atributo int);
+insert into prueba values (1);
+insert into prueba values (2);
+rollback;
+HEREDOC </code></pre>
+									</p>
+									<!-- Consultas a fichero -->
+									<h3>Consultas a fichero</h3>
+									<p>
+										Puede enviarse la salida a un fichero. 
+<pre><code>sqlplus -S alumno/alumno &lt;&lt;HEREDOC
+set
+</code></pre>										
+									</p>
 								</p>
 							</article>
 						<!-- About -->
