@@ -1,0 +1,12 @@
+[Unit]
+Description=Service Oracle
+After=network.target
+
+[Service]
+Type=forking
+User=alumno
+ExecStart=/home/alumno/Documents/PracticaScripts/arrancaOracle.sh
+ExecStop=/home/alumno/Documents/PracticaScripts/paradaOracle.sh
+
+[Install]
+WantedBy=multi-user.target
