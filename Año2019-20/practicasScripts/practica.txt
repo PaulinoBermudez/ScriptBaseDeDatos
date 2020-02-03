@@ -51,8 +51,17 @@ montado: Punto de montaje
 create table DF(hora varchar(40),sistema varchar(40),tamano varchar(40),usado varchar(40),montado varchar(40));
 
 Listado 5:
-Creacion de la tabla DF Filesystem     
-1K-blocks      Used Available Use% Mounted onudev             4002180         0   4002180   0% /devtmpfs             804488     19756    784732   3% /run/dev/sda1      237874840 183034916  42733532  82% /tmpfs            4022440    437328   3585112  11% /dev/shmtmpfs               5120         4      5116   1% /run/locktmpfs            4022440         0   4022440   0% /sys/fs/cgroup/dev/sdb5      689521880 595546232  58926896  91% /home/windowscgmfs                100         0       100   0% /run/cgmanager/fstmpfs             804488        88    804400   1% /run/user/1000
+Creacion de la tabla DF 
+Filesystem     1K-blocks      Used 	Available 	Use% 	Mounted on
+udev             4002180         0   	4002180   	0% 	/dev
+tmpfs             804488     19756    	784732   	3% 	/run
+/dev/sda1      237874840 183034916  	42733532  	82% 	/
+tmpfs            4022440    437328   	3585112  	11% 	/dev/shm
+tmpfs               5120         4      5116   		1% 	/run/lock
+tmpfs            4022440         0   	4022440   	0% 	/sys/fs/cgroup
+/dev/sdb5      689521880 595546232  	58926896  	91% 	/home/windows
+cgmfs                100         0      100   		0% 	/run/cgmanager/fs
+tmpfs             804488        88    	804400   	1% 	/run/user/1000
 
 Listado 6:Ejemplo de salida del comandodf -k
 
