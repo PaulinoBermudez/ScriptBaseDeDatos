@@ -44,6 +44,7 @@ fi
 
 nuevo-usuario-oracle.sh<<ENT
 
+#!/bin/bash
 if [ $# != 2 ]
 then
     echo "  Crea un usuario nuevo de oracle, con permisos connect y resource. \n
