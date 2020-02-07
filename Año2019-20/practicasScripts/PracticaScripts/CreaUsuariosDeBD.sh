@@ -9,6 +9,7 @@
 #   Uso: nuevo-usuario-oracle.sh <usuario> <contraseña>
 
 # ¿Existe el directorio?
+clear
 cd /home/alumno/
 echo "---------------"
 pwd
@@ -38,31 +39,29 @@ if [ -f $fichero ]
 then
     echo "Existe el fichero: $fichero" 
 else 
-    echo "Fichero creado"
+    echo "Fichero creado: $fichero"
     touch $fichero 
+    chmod +x $fichero
+    
+echo '#!/bin/bash' >> $fichero
+echo 'if [ $# != 2 ]' >> $fichero
+echo 'then' >> $fichero
+echo '    echo "  Crea un usuario nuevo de oracle, con permisos connect y resource.' >> $fichero
+echo '    Si el usuario ya existe, lo desbloquea y le cambia la contraseña.' >> $fichero
+echo '    Uso: nuevo-usuario-oracle.sh <usuario> <contraseña>' >> $fichero
+echo '    "' >> $fichero
+echo 'else' >> $fichero
+echo ''
+echo 'usuarios.sql<<EOF' >> $fichero
+echo 'create user $1 identified by $2;' >> $fichero
+echo 'grant connect,resource to $1;' >> $fichero
+echo 'EOF' >> $fichero
+echo '' >> $fichero
+echo 'sqlplus / as sysdba<<EOF' >> $fichero
+echo '@usuarios.sql' >> $fichero
+echo 'exit' >> $fichero
+echo 'EOF' >> $fichero
+echo 'rm usuarios.sql' >> $fichero
+echo 'echo "Lanzamiento de Script finalizado."' >> $fichero
+echo 'fi' >> $fichero
 fi
-
-nuevo-usuario-oracle.sh<<ENT
-
-#!/bin/bash
-if [ $# != 2 ]
-then
-    echo "  Crea un usuario nuevo de oracle, con permisos connect y resource. \n
-            Si el usuario ya existe, lo desbloquea y le cambia la contraseña. \n
-            Uso: nuevo-usuario-oracle.sh <usuario> <contraseña>
-        "
-else
-    cd /tmp
-usuarios.sql<<EOF
-create user $1 identified by $2;
-grant connect,resource to $1;
-EOF
-
-sqlplus / as sysdba<<EOF
-@/tmp/usuarios.sql
-exit
-EOF
-rm /tmp/usuarios.sql
-    echo "Lanzamiento de Script finalizado."
-fi
-ENT
