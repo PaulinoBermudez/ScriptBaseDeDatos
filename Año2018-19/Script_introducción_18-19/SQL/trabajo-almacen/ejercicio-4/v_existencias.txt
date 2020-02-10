@@ -1,0 +1,35 @@
+create or replace function f_ultimo_precio_compra (id_producto_p number) return number
+as
+    ultimo_precio number;
+begin
+    select precio_pagado
+    into 
+    ultimo_precio
+    from entrada
+    where
+        id_producto_p = entrada.id_producto and
+        fecha_entrada = (select max(fecha_entrada) from entrada where id_producto_p= entrada.id_producto);
+    return ultimo_precio;
+end;
+/
+create or replace function f_ultimo_precio_venta (id_producto_p number) return number
+as
+    ultimo_precio_v number;
+begin
+    select precio_unidad
+    into 
+    ultimo_precio_v
+    from salida
+    where
+        id_producto_p = salida.id_producto and
+        fecha_salida = (select max(fecha_salida) from salida where id_producto_p= salida.id_producto);
+    return ultimo_precio_v;
+end;
+/
+create or replace view v_existencias (idproducto, existencias, ultimopreciocompra, ultimoprecioventa) as
+select producto.id_producto as idproducto,
+        EXISTENCIAS_PRODUCTO(producto.id_producto) as existencias,
+        F_ULTIMO_PRECIO_COMPRA(producto.id_producto) as ultimopreciocompra,
+        F_ULTIMO_PRECIO_VENTA(producto.id_producto) as ultimoprecioventa
+from
+    producto;
