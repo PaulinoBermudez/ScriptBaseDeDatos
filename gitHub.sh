@@ -43,7 +43,7 @@ sleep 5
 echo ""
 echo "_________________________________# 75%"
 echo ""
-git add -all &&
+git add --all &&
 git commit -m "Organizando archivos" &&
 git push origin master
 git status
