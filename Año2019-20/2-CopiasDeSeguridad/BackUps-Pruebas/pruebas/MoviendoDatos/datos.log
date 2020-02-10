@@ -1,0 +1,34 @@
+;;; 
+Export: Release 18.0.0.0.0 - Production on Thu Dec 12 07:32:37 2019
+Version 18.3.0.0.0
+
+Copyright (c) 1982, 2018, Oracle and/or its affiliates.  All rights reserved.
+;;; 
+Connected to: Oracle Database 18c Enterprise Edition Release 18.0.0.0.0 - Production
+Starting "SERGIOPORTATIL"."SYS_EXPORT_SCHEMA_01":  sergioportatil/******** directory=backupssobremesa schemas=sergioportatil dumpfile=sergioportatil.dmp logfile=sergioportatil.log 
+Processing object type SCHEMA_EXPORT/TABLE/TABLE_DATA
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/STATISTICS/INDEX_STATISTICS
+Processing object type SCHEMA_EXPORT/TABLE/STATISTICS/TABLE_STATISTICS
+Processing object type SCHEMA_EXPORT/STATISTICS/MARKER
+Processing object type SCHEMA_EXPORT/USER
+Processing object type SCHEMA_EXPORT/SYSTEM_GRANT
+Processing object type SCHEMA_EXPORT/ROLE_GRANT
+Processing object type SCHEMA_EXPORT/DEFAULT_ROLE
+Processing object type SCHEMA_EXPORT/TABLESPACE_QUOTA
+Processing object type SCHEMA_EXPORT/PRE_SCHEMA/PROCACT_SCHEMA
+Processing object type SCHEMA_EXPORT/TABLE/TABLE
+Processing object type SCHEMA_EXPORT/TABLE/COMMENT
+Processing object type SCHEMA_EXPORT/TABLE/INDEX/INDEX
+Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/CONSTRAINT
+Processing object type SCHEMA_EXPORT/TABLE/CONSTRAINT/REF_CONSTRAINT
+. . exported "SERGIOPORTATIL"."CARRERAS"                 6.109 KB       6 rows
+. . exported "SERGIOPORTATIL"."CIRCUITOS"                5.593 KB       4 rows
+. . exported "SERGIOPORTATIL"."ESCUDERIAS"               5.585 KB       3 rows
+. . exported "SERGIOPORTATIL"."PILOTOS"                  6.132 KB       8 rows
+. . exported "SERGIOPORTATIL"."PROTOTIPOS"               6.101 KB       7 rows
+. . exported "SERGIOPORTATIL"."RESULTADOS"               7.742 KB      30 rows
+Master table "SERGIOPORTATIL"."SYS_EXPORT_SCHEMA_01" successfully loaded/unloaded
+******************************************************************************
+Dump file set for SERGIOPORTATIL.SYS_EXPORT_SCHEMA_01 is:
+  /home/alumno/datos/backupsergio/sergioportatil.dmp
+Job "SERGIOPORTATIL"."SYS_EXPORT_SCHEMA_01" successfully completed at Thu Dec 12 07:34:49 2019 elapsed 0 00:02:09

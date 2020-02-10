@@ -1,0 +1,8 @@
+;;; 
+Export: Release 18.0.0.0.0 - Production on Thu Dec 12 07:06:16 2019
+Version 18.3.0.0.0
+
+Copyright (c) 1982, 2018, Oracle and/or its affiliates.  All rights reserved.
+;;; 
+Connected to: Oracle Database 18c Enterprise Edition Release 18.0.0.0.0 - Production
+ORA-39170: Schema expression 'EXPORTACION-DE-PRUEBA' does not correspond to any schemas.
