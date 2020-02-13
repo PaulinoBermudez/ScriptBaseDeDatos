@@ -1,0 +1,23 @@
+create or replace function EXISTENCIAS_PRODUCTO (id_producto_p in number) return number
+as
+existencia_producto number;
+comprobar_entrada number;
+comprobar_salida number;
+stock number;
+begin
+    select (stock) into stock from producto where id_producto=id_producto_p;
+    select count(id_producto) into existencia_producto from producto where id_producto=id_producto_p;
+    select count(id_producto) into comprobar_entrada from ENTRADA where id_producto=id_producto_p;
+    select count(id_producto) into comprobar_salida from SALIDA where id_producto=id_producto_p;
+    if (comprobar_salida=0) then
+        if (comprobar_entrada=0) then
+            stock:=0;
+        end if;
+    end if;
+    if (EXISTENCIA_PRODUCTO=0) then
+        stock:=-1;
+    end if;
+    return stock;
+    end;
+/
+

@@ -1,0 +1,21 @@
+create  or replace procedure SALIDA_PRODUCTO(
+    id_producto_p IN  number ,
+    cantidad_salida_p IN  number ,
+    precio_unidad_p IN  number ,
+    fecha_salida_p IN timestamp default systimestamp)
+as
+    existencia_producto number;
+begin
+    select count(id_producto) into existencia_producto from producto where id_producto=id_producto_p;
+    if (fecha_salida_p > systimestamp) then
+            RAISE_APPLICATION_ERROR(-20103, 'Fecha posterior a la actual');
+    end if;
+    if (existencia_producto=0) then
+           RAISE_APPLICATION_ERROR(-20102, 'No existe el producto');
+    end if;
+    update producto set stock = nvl(stock,0) - cantidad_salida_p where id_producto=id_producto_p;
+    insert into salida ( cantidad_salida, precio_unidad, id_producto,  fecha_salida)
+    values (cantidad_salida_p, precio_unidad_p, id_producto_p, fecha_salida_p);
+end;
+/
+

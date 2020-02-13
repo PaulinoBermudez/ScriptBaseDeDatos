@@ -1,0 +1,16 @@
+create table producto (
+    nombre_producto varchar (255),
+    stock number,
+    id_producto number primary key);
+create table entrada (
+    fecha_entrada timestamp default systimestamp,
+    id_producto number,
+    cantidad_entrada number,
+    precio_pagado number,
+    foreign key (id_producto) references producto(id_producto));
+create table salida (
+    fecha_salida timestamp default systimestamp,
+    id_producto number,
+    cantidad_salida number,
+    precio_unidad number,
+    foreign key (id_producto) references producto(id_producto));

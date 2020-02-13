@@ -1,0 +1,17 @@
+create view v_productos as 
+select nombre_producto as nombreproducto, id_producto as idproducto
+from producto;
+
+create sequence SECUENCIA_PRODUCTO_ID;
+create  or replace procedure CREAR_PRODUCTO(nombreproducto_p IN varchar, idproducto_p OUT number
+)
+as
+    nuevoid number;
+begin
+    nuevoid := SECUENCIA_PRODUCTO_ID.NEXTVAL;
+    insert into producto(nombre_producto,id_producto)
+    values (nombreproducto_p, nuevoid);
+    idproducto_p := nuevoid;
+end;
+/
+
