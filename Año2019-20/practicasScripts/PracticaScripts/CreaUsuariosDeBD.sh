@@ -51,10 +51,9 @@ echo '    Si el usuario ya existe, lo desbloquea y le cambia la contraseña.' >>
 echo '    Uso: nuevo-usuario-oracle.sh <usuario> <contraseña>' >> $fichero
 echo '    "' >> $fichero
 echo 'else' >> $fichero
-echo ''
-echo 'usuarios.sql<<EOF' >> $fichero
-echo 'create user $1 identified by $2;' >> $fichero
-echo 'grant connect,resource to $1;' >> $fichero
+echo '' >> $fichero
+echo 'echo create user $1 identified by $2; >> usuarios.sql'>> $fichero
+echo 'echo grant connect,resource to $1; >> usuarios.sql '>> $fichero
 echo 'EOF' >> $fichero
 echo '' >> $fichero
 echo 'sqlplus / as sysdba<<EOF' >> $fichero
