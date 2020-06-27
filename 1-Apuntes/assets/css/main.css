@@ -618,6 +618,11 @@ input, select, textarea {
 		display: inline-block;
 		position: relative;
 	}
+		p.back{
+			background-color: #ffdd90;
+			background-image: url("../../images/intro.jpg")
+
+		}
 
 		.image:before {
 			pointer-events: none;
