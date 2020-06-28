@@ -28,8 +28,20 @@ body {
 	line-height: 1;
 }
 
-video {
-	
+video bg {
+	min-width: 100%;
+	min-height: 100%;
+	width: auto;
+	height: auto;
+
+	position: fixed;    
+	top: 44%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%); 
+		
+	z-index: -100;
+		
+	background-size: cover;
 }
 
 ol, ul {
