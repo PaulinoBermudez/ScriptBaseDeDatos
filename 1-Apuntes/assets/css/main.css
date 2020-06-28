@@ -28,7 +28,7 @@ body {
 	line-height: 1;
 }
 
-video bg {
+.bg {
 	min-width: 100%;
 	min-height: 100%;
 	width: auto;
@@ -39,7 +39,7 @@ video bg {
 	left: 50%;
 	transform: translateX(-50%) translateY(-50%); 
 		
-	z-index: -100;
+	z-index: 1;
 		
 	background-size: cover;
 }
